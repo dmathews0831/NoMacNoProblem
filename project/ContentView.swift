@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // Initialize stored variables
+    @AppStorage("playerName") var playerName: String = ""
+    @AppStorage("coins") var coins: Int = 0
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, campus!")
+            TextField("Enter name:", text: $playerName).textFieldStyle(.roundedBorder)
+            Text("Coins: \(coins)")
+            Button("Claim bonus") {
+                
+                coins += 1000
+            }
         }
         .padding()
     }
