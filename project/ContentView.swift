@@ -18,6 +18,7 @@ struct ContentView: View {
             TextField("Enter name:", text: $playerName).textFieldStyle(.roundedBorder)
             Text("Coins: \(coins)")
             Button("Claim bonus") {
+                
                 coins += 1000
             }
         }

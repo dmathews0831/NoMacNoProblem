@@ -164,6 +164,9 @@
 			);
 			mainGroup = 930DB8102F3A774600B1B0A4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9311B34F2F4F915400DA3A44 /* XCLocalSwiftPackageReference "Packages/DeckOfPlayingCards" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 930DB81A2F3A774600B1B0A4 /* Products */;
 			projectDirPath = "";
@@ -516,6 +519,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		9311B34F2F4F915400DA3A44 /* XCLocalSwiftPackageReference "Packages/DeckOfPlayingCards" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DeckOfPlayingCards;
+		};
+/* End XCLocalSwiftPackageReference section */
 	};
 	rootObject = 930DB8112F3A774600B1B0A4 /* Project object */;
 }
