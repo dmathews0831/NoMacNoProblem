@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 enum RouletteColor {
     case red
@@ -58,7 +58,7 @@ class RouletteWheel {
             
         // 1–36
         for number in pocketSequence {
-            var color: RouletteColor = (number == 0 || number == -1) ? .green :
+            let color: RouletteColor = (number == 0 || number == -1) ? .green :
                                         redNumbers.contains(number)  ? .red :
                                                                        .black
             if (number == -1) {
@@ -75,5 +75,66 @@ class RouletteWheel {
     func angleForPocket(at index: Int) -> Double {
         let sliceAngle = 360.0 / Double(pockets.count)
         return sliceAngle * Double(index)
+    }
+}
+
+struct WheelSlice: View {
+    let startAngle: Angle
+    let endAngle: Angle
+    let color: SwiftUI.Color
+    let label: String
+
+    var body: some View {
+        GeometryReader { geo in
+            let rect = geo.frame(in: .local)
+            let center = CGPoint(x: rect.midX, y: rect.midY)
+            let radius = min(rect.width, rect.height) / 2
+
+            let midAngle = Angle(
+                degrees: (startAngle.degrees + endAngle.degrees) / 2
+            )
+
+            ZStack {
+                // Slice shape
+                Path { path in
+                    path.move(to: center)
+
+                    path.addArc(
+                        center: center,
+                        radius: radius,
+                        startAngle: startAngle,
+                        endAngle: endAngle,
+                        clockwise: false
+                    )
+
+                    path.closeSubpath()
+                }
+                .fill(color)
+
+                // Number at outer edge of slice
+                Text(label)
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white)
+                    // Rotate into slice position
+                    .rotationEffect(midAngle)
+                    // Push outward
+                    .offset(y: -radius * 0.85)
+                    // Rotate so top points toward center
+                    .rotationEffect(startAngle)
+            }
+        }
+    }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.closeSubpath()
+
+        return path
     }
 }
