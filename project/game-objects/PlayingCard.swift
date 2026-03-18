@@ -28,7 +28,6 @@ enum FaceValue: String {
     case jack
     case queen
     case king
-    case joker
 }
 
 enum Color: String {
