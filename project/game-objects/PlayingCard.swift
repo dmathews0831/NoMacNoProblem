@@ -44,7 +44,36 @@ class PlayingCard {
     init(suit: Suit, faceValue: FaceValue) {
         self.suit = suit
         self.faceValue = faceValue
-        self.value = -1
+        if (faceValue == .king || faceValue == .queen || faceValue == .jack || faceValue == .ten) {
+            self.value = 10
+        }
+        else if (faceValue == .nine) {
+            self.value = 9
+        }
+        else if (faceValue == .eight) {
+            self.value = 8
+        }
+        else if (faceValue == .seven) {
+            self.value = 7
+        }
+        else if (faceValue == .six) {
+            self.value = 6
+        }
+        else if (faceValue == .five) {
+            self.value = 5
+        }
+        else if (faceValue == .four) {
+            self.value = 4
+        }
+        else if (faceValue == .three) {
+            self.value = 3
+        }
+        else if (faceValue == .two) {
+            self.value = 2
+        }
+        else {
+            self.value = 11
+        }
         if (suit == .clubs || suit == .spades) {
             self.color = Color.black
         }

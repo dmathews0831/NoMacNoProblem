@@ -67,6 +67,17 @@ struct ContentView: View {
     }
 }
 
+struct BlackjackView: View {
+    
+    @State private var dealer = BlackjackDealer(deck: Deck())
+
+    
+    var body: some View {
+        Text(dealer.toString())
+        
+    }
+}
+
 #Preview {
     ContentView()
 }

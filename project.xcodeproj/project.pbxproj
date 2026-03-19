@@ -11,6 +11,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9300F5732F6C74BF006B80AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 930DB8112F3A774600B1B0A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 930DB8182F3A774600B1B0A4;
+			remoteInfo = project;
+		};
 		93DACE2A2F4CEDDF009695F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 930DB8112F3A774600B1B0A4 /* Project object */;
@@ -35,11 +42,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9300F56F2F6C74BE006B80AD /* projectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = projectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		930DB8192F3A774600B1B0A4 /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93DACE222F4CEDDE009695F4 /* watchTarget Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "watchTarget Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		9300F5702F6C74BF006B80AD /* projectTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = projectTests;
+			sourceTree = "<group>";
+		};
 		930DB81B2F3A774600B1B0A4 /* project */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = project;
@@ -53,6 +66,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9300F56C2F6C74BE006B80AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		930DB8162F3A774600B1B0A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,6 +95,7 @@
 			children = (
 				930DB81B2F3A774600B1B0A4 /* project */,
 				93DACE232F4CEDDE009695F4 /* watchTarget Watch App */,
+				9300F5702F6C74BF006B80AD /* projectTests */,
 				930DB81A2F3A774600B1B0A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +105,7 @@
 			children = (
 				930DB8192F3A774600B1B0A4 /* project.app */,
 				93DACE222F4CEDDE009695F4 /* watchTarget Watch App.app */,
+				9300F56F2F6C74BE006B80AD /* projectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +113,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9300F56E2F6C74BE006B80AD /* projectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9300F5772F6C74C0006B80AD /* Build configuration list for PBXNativeTarget "projectTests" */;
+			buildPhases = (
+				9300F56B2F6C74BE006B80AD /* Sources */,
+				9300F56C2F6C74BE006B80AD /* Frameworks */,
+				9300F56D2F6C74BE006B80AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9300F5742F6C74BF006B80AD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9300F5702F6C74BF006B80AD /* projectTests */,
+			);
+			name = projectTests;
+			packageProductDependencies = (
+			);
+			productName = projectTests;
+			productReference = 9300F56F2F6C74BE006B80AD /* projectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		930DB8182F3A774600B1B0A4 /* project */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 930DB8242F3A774700B1B0A4 /* Build configuration list for PBXNativeTarget "project" */;
@@ -147,6 +192,10 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					9300F56E2F6C74BE006B80AD = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 930DB8182F3A774600B1B0A4;
+					};
 					930DB8182F3A774600B1B0A4 = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -174,11 +223,19 @@
 			targets = (
 				930DB8182F3A774600B1B0A4 /* project */,
 				93DACE212F4CEDDE009695F4 /* watchTarget Watch App */,
+				9300F56E2F6C74BE006B80AD /* projectTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9300F56D2F6C74BE006B80AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		930DB8172F3A774600B1B0A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +253,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9300F56B2F6C74BE006B80AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		930DB8152F3A774600B1B0A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -213,6 +277,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9300F5742F6C74BF006B80AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 930DB8182F3A774600B1B0A4 /* project */;
+			targetProxy = 9300F5732F6C74BF006B80AD /* PBXContainerItemProxy */;
+		};
 		93DACE2B2F4CEDDF009695F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 93DACE212F4CEDDE009695F4 /* watchTarget Watch App */;
@@ -221,6 +290,51 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		9300F5752F6C74C0006B80AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = blackjack.projectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/project.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/project";
+			};
+			name = Debug;
+		};
+		9300F5762F6C74C0006B80AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = blackjack.projectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/project.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/project";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		930DB8222F3A774700B1B0A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -491,6 +605,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9300F5772F6C74C0006B80AD /* Build configuration list for PBXNativeTarget "projectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9300F5752F6C74C0006B80AD /* Debug */,
+				9300F5762F6C74C0006B80AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		930DB8142F3A774600B1B0A4 /* Build configuration list for PBXProject "project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

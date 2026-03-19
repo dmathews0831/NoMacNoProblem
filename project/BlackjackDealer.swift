@@ -4,12 +4,11 @@
 //
 //  Created by Alexander Joseph Toskey on 2/23/26.
 //
-import PlayingCard
 
 struct Deck {
     let suits: [Suit] = [.clubs, .spades, .hearts, .diamonds]
-        let values: [FaceValue] = [.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king]
-    let cards: [PlayingCard] = []
+    let values: [FaceValue] = [.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king]
+    var cards: [PlayingCard] = []
 
     init() {
         for suit in suits {
@@ -22,16 +21,29 @@ struct Deck {
 
 class BlackjackDealer {
     
-    let deck: Deck
+    var deck: Deck
     
     init(deck: Deck) {
         self.deck = deck
+        shuffle()
     }
     
     func toString() -> String {
-        return "\(deck.cards)"
+        return deck.cards.map { "\($0.description())" }.joined(separator: ", ")
+    }
+    
+    func shuffle() {
+        deck.cards.shuffle()
+    }
+    
+    func newDeck() {
+        deck = Deck()
+        shuffle()
+    }
+    
+    func dealCard() -> PlayingCard? {
+        return deck.cards.popLast()
     }
     
 }
-let deck = Deck(cards: <#T##PlayingCard#>)
-let dealer = BlackjackDealer(deck: <#T##Deck#>)
+
