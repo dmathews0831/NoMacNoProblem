@@ -46,6 +46,7 @@ struct ContentView: View {
     // State variable which controls which screen is being displayed
     @State private var currentScreen: Screen = .mainMenu
     
+    // Roulette wheel variables
     @State private var wheel = RouletteWheel()
     @State private var rotation: Double = 0
     @State private var winningPocket: RoulettePocket? = nil
@@ -65,6 +66,7 @@ struct ContentView: View {
     // State variable which will display the table of bets
     @State private var showingBetSheet = false
     
+    // List of available CPUs based on the selected number of players during multiplayer select (host)
     var availableCPUOptions: [Int] {
         guard let humans = selectedPlayerCount else { return [] }
         return Array(0...(maxPlayers - humans))
@@ -85,6 +87,7 @@ struct ContentView: View {
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
     
+    // View which displays the player's current balance
     var balanceView: some View {
         VStack {
             Text("Balance: \(coins)")
@@ -93,6 +96,7 @@ struct ContentView: View {
         }
     }
     
+    // View which contains a button for the user to claim their daily balance
     var claimBonusView: some View {
         VStack {
             Button("CLAIM DAILY BONUS") {
@@ -102,6 +106,7 @@ struct ContentView: View {
         }
     }
     
+    // Main menu
     var mainMenuView: some View {
         VStack {
             balanceView
@@ -141,6 +146,7 @@ struct ContentView: View {
         }
     }
     
+    // Single-player/multiplayer selection screen
     var playSelectView: some View {
         VStack {
             balanceView
@@ -168,6 +174,7 @@ struct ContentView: View {
         }
     }
     
+    // Game selection screen for single player
     var gameSelectSPView: some View {
         VStack {
             balanceView
@@ -198,6 +205,7 @@ struct ContentView: View {
         }
     }
     
+    // Number of CPUs selection screen
     var CPUSelectView: some View {
         VStack {
             balanceView
@@ -246,6 +254,7 @@ struct ContentView: View {
         }
     }
     
+    // Join/host selection screen for multiplayer
     var joinHostView: some View {
         VStack {
             balanceView
@@ -274,6 +283,7 @@ struct ContentView: View {
         }
     }
     
+    // Game ID input screen for multiplayer
     var enterGameIDView: some View {
         VStack {
             balanceView
@@ -315,6 +325,7 @@ struct ContentView: View {
         }
     }
     
+    // Game selection and options screen for multiplayer
     var gameSelectMPView: some View {
         VStack {
             balanceView
@@ -405,6 +416,7 @@ struct ContentView: View {
         }
     }
     
+    // Waiting room screen for multiplayer
     var waitingRoomView: some View {
         VStack {
             balanceView
@@ -441,6 +453,7 @@ struct ContentView: View {
         }
     }
     
+    // Settings screen (nothing to display for now)
     var settingsView: some View {
         VStack {
             balanceView
@@ -453,6 +466,7 @@ struct ContentView: View {
         }
     }
 
+    // Profile screen (nothing for now, will be used to display login and authentication information)
     var profileView: some View {
         VStack {
             balanceView
@@ -465,6 +479,9 @@ struct ContentView: View {
         }
     }
     
+    // Roulette game screen
+    // Initially, the wheel will be visible
+    // The user can click on "BET" to display the table of bets
     var rouletteView: some View {
         
         VStack {
@@ -531,6 +548,7 @@ struct ContentView: View {
         
     }
     
+    // Table of bets display
     var betSheetView: some View {
         VStack {
             Spacer()
@@ -573,11 +591,14 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
     
+    // TODO: Add view for blackjack
+    
     // Compute the players winnings/losses
     var netWinnings: Int {
         coins - startingCoins
     }
     
+    // Finished screen after a game has ended
     var gameFinishedView: some View {
         VStack {
             balanceView
@@ -610,6 +631,7 @@ struct ContentView: View {
         }
     }
     
+    // State machine to display the correct screen
     var body: some View {
         switch currentScreen {
         case .mainMenu:
@@ -641,6 +663,7 @@ struct ContentView: View {
         }
     }
     
+    // Helper function to spin the roulette wheel (potentially move to RouletteWheel.swift (?))
     func spinWheel() {
         let result = wheel.spinWithIndex()
         winningPocket = result.pocket
