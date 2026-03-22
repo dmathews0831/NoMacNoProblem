@@ -78,6 +78,9 @@ struct ContentView: View {
     // Bets selected for roulette single player
     @State private var selectedNumberBets: Set<Int> = []
     
+    // Initial player balance before a game is played
+    @State private var startingCoins: Int = 0
+    
     // Initialize stored variables
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
@@ -222,6 +225,7 @@ struct ContentView: View {
             Button("PLAY") {
                 if (selectedGame == .roulette) {
                     currentScreen = .playRoulette
+                    startingCoins = coins
                 }
                 else if (selectedGame == .blackjack) {
                     // TODO: Proceed to blackjack
@@ -411,6 +415,7 @@ struct ContentView: View {
             Button("Start Game") {
                 if (selectedGame == .roulette) {
                     currentScreen = .playRoulette
+                    startingCoins = coins
                 }
                 else if (selectedGame == .blackjack) {
                     // TODO: Proceed to blackjack
@@ -545,7 +550,7 @@ struct ContentView: View {
                     )
                 }
 
-                // WHEEL button
+                // Button to return to the wheel
                 Button("WHEEL") {
                     withAnimation {
                         showingBetSheet = false
@@ -568,12 +573,32 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
     
+    // Compute the players winnings/losses
+    var netWinnings: Int {
+        coins - startingCoins
+    }
+    
     var gameFinishedView: some View {
         VStack {
             balanceView
             Spacer()
             
-            Text("You won: $0.00")  // TODO: Implement earnings/losses
+            // Display the player winnings/losses
+            if netWinnings > 0 {
+                Text("You won: +\(netWinnings)")
+                    .font(.title)
+                    .foregroundColor(.green)
+            }
+            else if netWinnings < 0 {
+                Text("You lost: \(netWinnings)")
+                    .font(.title)
+                    .foregroundColor(.red)
+            }
+            else {
+                Text("No change in your balance")
+                    .font(.title)
+                    .foregroundColor(.gray)
+            }
             
             Spacer()
             Button("Leave") {

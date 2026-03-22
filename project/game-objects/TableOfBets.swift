@@ -91,7 +91,7 @@ extension TableOfBets {
     }
     
     // Static cells (non-betting for now)
-    func staticCell(_ text: String, color: SwiftUI.Color = SwiftUI.Color(.gray).opacity(0.3)) -> some View {
+    func staticCell(_ text: String, color: SwiftUI.Color = SwiftUI.Color(.green)) -> some View {
         Text(text)
             .font(.caption)
             .frame(maxWidth: .infinity, minHeight: 50)
