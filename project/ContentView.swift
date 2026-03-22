@@ -59,6 +59,9 @@ struct ContentView: View {
     // The game ID the user enters to join a game
     @State private var gameID: String = ""
     
+    // State variable which will display the table of bets
+    @State private var showingBetSheet = false
+    
     var availableCPUOptions: [Int] {
         guard let humans = selectedPlayerCount else { return [] }
         return Array(0...(maxPlayers - humans))
@@ -452,32 +455,60 @@ struct ContentView: View {
     }
     
     var rouletteView: some View {
+        
         VStack {
             balanceView
             Spacer()
+
+            
             ZStack {
-                // Wheel
-                RouletteWheelView(wheel: wheel, rotation: $rotation)
-                    .frame(width: 250, height: 250)
                 
-                Circle()
-                    .stroke(SwiftUI.Color.black, lineWidth: 2)
-                    .fill(SwiftUI.Color.yellow)
-                    .frame(width: 175, height: 175)
-                    .shadow(radius: 2)
-                
-                // Result text
-                if let pocket = winningPocket {
-                    Text("Result: \(pocket.displayNumber)")
-                        .font(.headline)
-                } else {
-                    Text("Tap to Spin")
-                        .font(.headline)
+                // Your existing roulette UI
+                VStack {
+                    ZStack {
+                        // Wheel
+                        RouletteWheelView(wheel: wheel, rotation: $rotation)
+                            .frame(width: 250, height: 250)
+                        
+                        Circle()
+                            .stroke(SwiftUI.Color.black, lineWidth: 2)
+                            .fill(SwiftUI.Color.yellow)
+                            .frame(width: 175, height: 175)
+                            .shadow(radius: 2)
+                        
+                        // Result text
+                        if let pocket = winningPocket {
+                            Text("Result: \(pocket.displayNumber)")
+                                .font(.headline)
+                        } else {
+                            Text("Tap to Spin")
+                                .font(.headline)
+                        }
+                            
+                    }
+                    .onTapGesture {
+                        spinWheel()
+                    }
+
+                    Button("BET") {
+                        withAnimation {
+                            showingBetSheet = true
+                        }
+                    }
+                    .padding()
                 }
-                    
-            }
-            .onTapGesture {
-                spinWheel()
+
+                // Overlay (only shows when betting)
+                if showingBetSheet {
+                    SwiftUI.Color(.black).opacity(0.4)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                }
+
+                if showingBetSheet {
+                    betSheetView
+                        .transition(.move(edge: .bottom))
+                }
             }
 
             
@@ -487,6 +518,44 @@ struct ContentView: View {
             }
         }
         
+    }
+    
+    var betSheetView: some View {
+        VStack {
+            Spacer()
+
+            VStack(spacing: 16) {
+
+                Text("Place Your Bets")
+                    .font(.headline)
+                    .padding()
+
+                // Table of bets
+                ScrollView {
+                    TableOfBets()
+                }
+
+                // WHEEL button
+                Button("WHEEL") {
+                    withAnimation {
+                        showingBetSheet = false
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(SwiftUI.Color(.green))
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding(.horizontal)
+
+            }
+            .padding(.bottom, 20)
+            .frame(maxWidth: .infinity)
+            .background(SwiftUI.Color(.white))
+            .cornerRadius(20)
+            .shadow(radius: 10)
+        }
+        .ignoresSafeArea()
     }
     
     var gameFinishedView: some View {

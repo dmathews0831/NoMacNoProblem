@@ -52,7 +52,7 @@ class RouletteWheel {
             
         var pockets: [RoulettePocket] = [];
             
-        // Zero(s)
+        // Zeros
         pockets.append(RoulettePocket(number: 0, displayNumber: "0", color: .green))
         pockets.append(RoulettePocket(number: -1, displayNumber: "00", color: .green))
             
