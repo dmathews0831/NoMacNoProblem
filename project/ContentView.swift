@@ -38,6 +38,9 @@ let maxPlayers = 4
 // Maximum number of possible human players in a game
 let maxHumans = 4
 
+// Default bet amount
+let betAmount = 10
+
 struct ContentView: View {
 
     // State variable which controls which screen is being displayed
@@ -71,6 +74,9 @@ struct ContentView: View {
     var isValidGameID: Bool {
         gameID.count == 3 && gameID.allSatisfy { $0.isNumber }
     }
+    
+    // Bets selected for roulette single player
+    @State private var selectedNumberBets: Set<Int> = []
     
     // Initialize stored variables
     @AppStorage("playerName") var playerName: String = ""
@@ -532,7 +538,11 @@ struct ContentView: View {
 
                 // Table of bets
                 ScrollView {
-                    TableOfBets()
+                    TableOfBets(
+                        selectedBets: $selectedNumberBets,
+                        coins: $coins,
+                        betAmount: betAmount
+                    )
                 }
 
                 // WHEEL button
@@ -613,8 +623,17 @@ struct ContentView: View {
         let sliceAngle = 360.0 / Double(wheel.pockets.count)
         let winningAngle = sliceAngle * Double(result.index)
 
-        // Spin multiple times + land on correct slice
         rotation += 360 * 5 + (360 - winningAngle)
+        
+        // Payout
+        if let winningNumber = Int(result.pocket.displayNumber) {
+            if selectedNumberBets.contains(winningNumber) {
+                coins += betAmount * 2
+            }
+        }
+        
+        // Clear the bets after the wheel is spun
+        selectedNumberBets.removeAll()
     }
 }
 

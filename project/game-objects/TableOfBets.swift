@@ -9,51 +9,54 @@ import SwiftUI
 
 struct TableOfBets: View {
     
+    @Binding var selectedBets: Set<Int>
+    @Binding var coins: Int
+    let betAmount: Int
+    
     var body: some View {
         HStack(spacing: 8) {
             
-            // FIRST COLUMN (6 bets)
+            // First column (non-interactive for now)
             VStack(spacing: 8) {
-                betCell("1 to 18")
-                betCell("EVEN")
-                betCell("RED", color: .red)
-                betCell("BLACK", color: .black)
-                betCell("ODD")
-                betCell("19 to 36")
+                staticCell("1 to 18")
+                staticCell("EVEN")
+                staticCell("RED", color: .red)
+                staticCell("BLACK", color: .black)
+                staticCell("ODD")
+                staticCell("19 to 36")
             }
             
-            // SECOND COLUMN (3 bets)
+            // Second column
             VStack(spacing: 8) {
-                betCell("1st 12")
-                betCell("2nd 12")
-                betCell("3rd 12")
+                staticCell("1st 12")
+                staticCell("2nd 12")
+                staticCell("3rd 12")
             }
             
-            // MAIN TABLE (Columns 3–5)
+            // Main table
             VStack(spacing: 8) {
                 
-                // TOP ROW (0 and 00 spanning width)
+                // Top row
                 HStack(spacing: 8) {
-                    betCell("0", color: .green)
-                    betCell("00", color: .green)
+                    staticCell("0", color: .green)
+                    staticCell("00", color: .green)
                 }
                 
-                // NUMBER GRID
+                // Number grid
                 LazyVGrid(
                     columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3),
                     spacing: 8
                 ) {
                     ForEach(1...36, id: \.self) { number in
-                        betCell("\(number)",
-                                color: number % 2 == 0 ? .black : .red)
+                        numberCell(number)
                     }
                 }
                 
-                // BOTTOM ROW (2 to 1 bets)
+                // Bottom row
                 HStack(spacing: 8) {
-                    betCell("2 to 1")
-                    betCell("2 to 1")
-                    betCell("2 to 1")
+                    staticCell("2 to 1")
+                    staticCell("2 to 1")
+                    staticCell("2 to 1")
                 }
             }
         }
@@ -64,16 +67,41 @@ struct TableOfBets: View {
 // Bet cell
 extension TableOfBets {
     
-    func betCell(_ text: String, color: SwiftUI.Color = SwiftUI.Color(.green)) -> some View {
-        Button(action: {
-            print("Tapped \(text)")
+    // NUMBER CELL (interactive)
+    func numberCell(_ number: Int) -> some View {
+        let isSelected = selectedBets.contains(number)
+        
+        return Button(action: {
+            if isSelected {
+                // Optional: allow deselect + refund
+                selectedBets.remove(number)
+                coins += betAmount
+            } else if coins >= betAmount {
+                selectedBets.insert(number)
+                coins -= betAmount
+            }
         }) {
-            Text(text)
+            Text("\(number)")
                 .font(.caption)
                 .frame(maxWidth: .infinity, minHeight: 50)
-                .background(color)
+                .background(isSelected ? SwiftUI.Color(.yellow) : numberColor(number))
                 .foregroundColor(.white)
                 .cornerRadius(6)
         }
+    }
+    
+    // Static cells (non-betting for now)
+    func staticCell(_ text: String, color: SwiftUI.Color = SwiftUI.Color(.gray).opacity(0.3)) -> some View {
+        Text(text)
+            .font(.caption)
+            .frame(maxWidth: .infinity, minHeight: 50)
+            .background(color)
+            .foregroundColor(.white)
+            .cornerRadius(6)
+    }
+    
+    // Basic red/black coloring
+    func numberColor(_ number: Int) -> SwiftUI.Color {
+        number % 2 == 0 ? .black : .red
     }
 }
