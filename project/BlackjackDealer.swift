@@ -22,9 +22,11 @@ struct Deck {
 class BlackjackDealer {
     
     var deck: Deck
+    var betAmount: Int
     
     init(deck: Deck) {
         self.deck = deck
+        betAmount = 0
         shuffle()
     }
     
@@ -44,6 +46,11 @@ class BlackjackDealer {
     func dealCard() -> PlayingCard? {
         return deck.cards.popLast()
     }
+    
+    func takeBet(amount: Int) {
+        betAmount += amount
+    }
+    
     
 }
 

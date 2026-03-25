@@ -21,7 +21,7 @@ enum Screen {
     case enterGameID
     case waitingRoom
     case playRoulette
-    //case playBlackjack
+    case playBlackjack
     case finish
     
 }
@@ -81,6 +81,23 @@ struct ContentView: View {
     
     // State variable which will display the table of bets
     @State private var showingBetSheet = false
+    
+    // State variable for the blackjack dealer object
+    @State private var dealer = BlackjackDealer(deck: Deck())
+    
+    // State varibale for the blackjack bet amount
+    @State private var betAmountB: Double = 10
+    
+    // State variable for the player
+    // Placeholder constructor values, add data persistence later
+    @State private var player: Player = Player(id: 1, balance: 0)
+    
+    // State variable to track if a blackjack game is active
+    @State private var isBlackjackActive = false
+    
+    // State variables to track current hands in blackjack
+    @State private var dealerHand: [PlayingCard] = []
+    @State private var playerHand: [PlayingCard] = []
     
     // List of available CPUs based on the selected number of players during multiplayer select (host)
     var availableCPUOptions: [Int] {
@@ -252,7 +269,8 @@ struct ContentView: View {
                     startingCoins = coins
                 }
                 else if (selectedGame == .blackjack) {
-                    // TODO: Proceed to blackjack
+                    currentScreen = .playBlackjack
+                    startingCoins = coins
                 }
             }
             .font(.title)
@@ -607,8 +625,6 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
     
-    // TODO: Add view for blackjack
-    
     // Compute the players winnings/losses
     var netWinnings: Int {
         coins - startingCoins
@@ -647,6 +663,35 @@ struct ContentView: View {
         }
     }
     
+    var BlackjackView: some View {
+        
+        VStack {
+            Text("Balance: \(coins)")
+            Text("Dealer: ")
+            
+            Spacer()
+            
+            Text("Player: ")
+            
+            Spacer()
+            
+            Text("Bet: \(Int(betAmountB))")
+            
+            Slider(value: $betAmountB, in: 10...Double(coins), step: 10).disabled(isBlackjackActive)
+            
+            Button("Play Game") {
+                dealer.takeBet(amount: Int(betAmountB))
+                coins -= Int(betAmountB)
+                isBlackjackActive = true
+                dealerHand.append(dealer.dealCard()!)
+                playerHand.append(dealer.dealCard()!)
+                dealerHand.append(dealer.dealCard()!)
+                playerHand.append(dealer.dealCard()!)
+            }
+            .disabled(isBlackjackActive)
+        }
+    }
+    
     // State machine to display the correct screen
     var body: some View {
         switch currentScreen {
@@ -672,8 +717,8 @@ struct ContentView: View {
             waitingRoomView
         case .playRoulette:
             rouletteView
-        //case .playBlackjack:
-            //BlackjackView
+        case .playBlackjack:
+            BlackjackView
         case .finish:
             gameFinishedView
         }
@@ -698,17 +743,6 @@ struct ContentView: View {
         
         // Clear the bets after the wheel is spun
         selectedNumberBets.removeAll()
-    }
-}
-
-struct BlackjackView: View {
-    
-    @State private var dealer = BlackjackDealer(deck: Deck())
-
-    
-    var body: some View {
-        Text(dealer.toString())
-        
     }
 }
 

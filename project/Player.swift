@@ -5,7 +5,7 @@
 //  Created by Dylan Mathews on 2/18/26.
 //
 
-class player {
+class Player {
     var id: Int
     var balance: Int
     
@@ -40,5 +40,9 @@ class player {
     
     func playGame() {
         // fill, check param
+    }
+    
+    func placeBet(amount: Int) {
+        balance -= amount
     }
 }
