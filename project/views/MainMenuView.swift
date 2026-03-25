@@ -5,23 +5,29 @@
 //  Created by Alexander Joseph Toskey on 3/22/26.
 //
 
-/**
 import SwiftUI
 
-struct mainMenuView: View {
+struct MainMenuView: View {
     
     @Binding var path: [Route]
     @Binding var coins: Int
     
+    var claimBonusView: some View {
+        Button("CLAIM DAILY BONUS") {
+            coins += 1000
+        }
+        .buttonStyle(.borderedProminent)
+    }
+    
     var body: some View {
         VStack {
-            balanceView
+            BalanceView(coins: $coins)
             claimBonusView
             
             Spacer()
             
             Button("PLAY") {
-                currentScreen = .playSelect
+                path.append(.playSelect)
             }
             .font(.largeTitle)
             .frame(width: 200, height: 100)
@@ -33,7 +39,7 @@ struct mainMenuView: View {
             
             HStack {
                 Button {
-                    currentScreen = .settings
+                    path.append(.settings)
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .font(.title)
@@ -42,7 +48,7 @@ struct mainMenuView: View {
                 Spacer()
                 
                 Button {
-                    currentScreen = .profile
+                    path.append(.profile)
                 } label: {
                     Image(systemName: "person.circle.fill")
                         .font(.title)
@@ -52,5 +58,3 @@ struct mainMenuView: View {
         }
     }
 }
-
-*/

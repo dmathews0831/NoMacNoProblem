@@ -105,3 +105,52 @@ extension TableOfBets {
         number % 2 == 0 ? .black : .red
     }
 }
+
+struct BetSheetView: View {
+    
+    @Binding var coins: Int
+    @Binding var selectedNumberBets: Set<Int>
+    @Binding var showingBetSheet: Bool
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            VStack(spacing: 16) {
+                
+                Text("Place Your Bets")
+                    .font(.headline)
+                    .padding()
+                
+                // Table of bets
+                ScrollView {
+                    TableOfBets(
+                        selectedBets: $selectedNumberBets,
+                        coins: $coins,
+                        betAmount: betAmount
+                    )
+                }
+                
+                // Button to return to the wheel
+                Button("WHEEL") {
+                    withAnimation {
+                        showingBetSheet = false
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(SwiftUI.Color(.green))
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .padding(.horizontal)
+                
+            }
+            .padding(.bottom, 20)
+            .frame(maxWidth: .infinity)
+            .background(SwiftUI.Color(.white))
+            .cornerRadius(20)
+            .shadow(radius: 10)
+        }
+        .ignoresSafeArea()
+    }
+}

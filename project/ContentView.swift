@@ -26,6 +26,22 @@ enum Screen {
     
 }
 
+enum Route: Hashable {
+    case mainMenu
+    case playSelect
+    case settings
+    case profile
+    case gameSelectSP
+    case joinHost
+    case gameSelectMP
+    case CPUSelect
+    case enterGameID
+    case waitingRoom
+    case playRoulette
+    case playBlackjack
+    case finish
+}
+
 // Game states
 enum Game {
     case roulette
