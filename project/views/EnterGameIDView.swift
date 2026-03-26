@@ -25,10 +25,10 @@ struct EnterGameIDView: View {
                 .font(.title2)
             
             TextField("3-digit ID", text: $gameID)
-                .keyboardType(.numberPad)
-                .textFieldStyle(.roundedBorder)
+                //.keyboardType(.numberPad)
+                //.textFieldStyle(.roundedBorder)
                 .frame(width: 150)
-                .multilineTextAlignment(.center)
+                //.multilineTextAlignment(.center)
                 .onChange(of: gameID) {
                     // Restrict to digits and max length of 3
                     gameID = String(gameID.filter { $0.isNumber }.prefix(3))

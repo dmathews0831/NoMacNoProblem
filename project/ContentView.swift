@@ -99,6 +99,13 @@ struct ContentView: View {
     @State private var dealerHand: [PlayingCard] = []
     @State private var playerHand: [PlayingCard] = []
     
+    // State variables for the scores in blackjack
+    @State private var dealerScore: Int = 0
+    @State private var playerScore: Int = 0
+    
+    // State variable for the ending message in blackjack
+    @State private var blackjackEndMessage: String = ""
+    
     // List of available CPUs based on the selected number of players during multiplayer select (host)
     var availableCPUOptions: [Int] {
         guard let humans = selectedPlayerCount else { return [] }
@@ -119,6 +126,67 @@ struct ContentView: View {
     // Initialize stored variables
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
+    
+    // Resets blackjack
+    func resetBlackjack() {
+        sleep(3)
+        betAmountB = 10
+        dealer.betAmount = 0
+        dealer.newDeck()
+        playerHand = []
+        dealerHand = []
+        playerScore = 0
+        dealerScore = 0
+    }
+    
+    // Takes a turn for the blackjack dealer
+    func dealerTurn() {
+        updateScores()
+
+        let gameState = dealer.checkGameState(
+            playerScore: playerScore,
+            dealerScore: dealerScore,
+            stand: true
+        )
+        
+        if !gameState.2 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                dealerHand.append(dealer.dealCard()!)
+                dealerTurn()
+            }
+        } else {
+            endGame(gameState: gameState)
+        }
+    }
+    
+    // End-game logic for blackjack
+    func endGame(gameState: (Bool, Bool, Bool)) {
+        isBlackjackActive = false
+
+        if gameState.0 {
+            coins += 2 * dealer.betAmount
+            blackjackEndMessage = "You Win! (+\(dealer.betAmount))"
+        } else if gameState.1 {
+            coins += dealer.betAmount
+            blackjackEndMessage = "Push!"
+        } else {
+            blackjackEndMessage = "You Lose! (-\(dealer.betAmount))"
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            resetBlackjack()
+        }
+    }
+    
+    // Update blackjack score logic
+    func updateScores() {
+        let score = dealer.assessHands(
+            playerHand: playerHand,
+            dealerHand: dealerHand
+        )
+        dealerScore = score.1
+        playerScore = score.0
+    }
     
     // View which displays the player's current balance
     var balanceView: some View {
@@ -328,10 +396,10 @@ struct ContentView: View {
                         .font(.title2)
                     
                     TextField("3-digit ID", text: $gameID)
-                        .keyboardType(.numberPad)
-                        .textFieldStyle(.roundedBorder)
+                        //.keyboardType(.numberPad)
+                        //.textFieldStyle(.roundedBorder)
                         .frame(width: 150)
-                        .multilineTextAlignment(.center)
+                        //.multilineTextAlignment(.center)
                         .onChange(of: gameID) {
                             // Restrict to digits and max length of 3
                             gameID = String(gameID.filter { $0.isNumber }.prefix(3))
@@ -667,15 +735,69 @@ struct ContentView: View {
         
         VStack {
             Text("Balance: \(coins)")
-            Text("Dealer: ")
+            Text(blackjackEndMessage)
+            VStack {
+                Text("Dealer: \(dealerScore)")
+                HStack {
+                    ForEach(dealerHand) { card in
+                        Text(card.description())
+                            .padding(8)
+                            //.background(Color.white)
+                            .cornerRadius(6)
+                    }
+                }
+            }
             
             Spacer()
             
-            Text("Player: ")
+            VStack {
+                Text("Player: \(playerScore)")
+                HStack {
+                    ForEach(playerHand) { card in
+                        Text(card.description())
+                            .padding(8)
+                            //.background(Color.white)
+                            .cornerRadius(6)
+                    }
+                }
+            }
+            
             
             Spacer()
             
             Text("Bet: \(Int(betAmountB))")
+            
+            Button("Hit") {
+                playerHand.append(dealer.dealCard()!)
+                updateScores()
+                var gameState = dealer.checkGameState(playerScore: playerScore, dealerScore: dealerScore, stand: false)
+                if gameState.2 {
+                    resetBlackjack()
+                    blackjackEndMessage = "You Lose! (-\(dealer.betAmount))"
+                }
+            }
+            .disabled(!isBlackjackActive)
+            Button("Stand") {
+                isBlackjackActive = false
+                dealerHand[1].hide()
+                dealerTurn()
+            }
+            .disabled(!isBlackjackActive)
+            Button("Double") {
+                isBlackjackActive = false
+                dealer.takeBet(amount: Int(betAmountB))
+                coins -= Int(betAmountB)
+                playerHand.append(dealer.dealCard()!)
+                updateScores()
+                var gameState = dealer.checkGameState(playerScore: playerScore, dealerScore: dealerScore, stand: true)
+                if gameState.2 {
+                    endGame(gameState: gameState)
+                    return
+                }
+                dealerHand[1].hide()
+                dealerTurn()
+            }
+            .disabled(!isBlackjackActive || coins < Int(betAmountB))
             
             Slider(value: $betAmountB, in: 10...Double(coins), step: 10).disabled(isBlackjackActive)
             
@@ -683,12 +805,26 @@ struct ContentView: View {
                 dealer.takeBet(amount: Int(betAmountB))
                 coins -= Int(betAmountB)
                 isBlackjackActive = true
-                dealerHand.append(dealer.dealCard()!)
-                playerHand.append(dealer.dealCard()!)
-                dealerHand.append(dealer.dealCard()!)
-                playerHand.append(dealer.dealCard()!)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    playerHand.append(dealer.dealCard()!)
+                    updateScores()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    dealerHand.append(dealer.dealCard()!)
+                    updateScores()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    playerHand.append(dealer.dealCard()!)
+                    updateScores()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    var dealerHiddenCard = dealer.dealCard()
+                    dealerHiddenCard?.hide()
+                    dealerHand.append(dealerHiddenCard!)
+                }
+                blackjackEndMessage = ""
             }
-            .disabled(isBlackjackActive)
+            .disabled(isBlackjackActive && blackjackEndMessage != "")
         }
     }
     

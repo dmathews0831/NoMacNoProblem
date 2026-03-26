@@ -51,6 +51,64 @@ class BlackjackDealer {
         betAmount += amount
     }
     
+    func assessHands(playerHand: [PlayingCard], dealerHand: [PlayingCard]) -> (playerScore: Int, dealerScore: Int) {
+        var playerScore = 0
+        var dealerScore = 0
+        for card in playerHand {
+            playerScore += card.value
+            if playerScore > 21 {
+                for potentialAce in playerHand {
+                    if potentialAce.value == 11 {
+                        potentialAce.value = 1
+                        playerScore -= 10
+                        break
+                    }
+                }
+            }
+        }
+        for card in dealerHand {
+            if card.hidden {
+                break
+            }
+            dealerScore += card.value
+            if dealerScore > 21 {
+                for potentialAce in dealerHand {
+                    if potentialAce.value == 11 {
+                        potentialAce.value = 1
+                        dealerScore -= 10
+                        break
+                    }
+                }
+            }
+        }
+        return (playerScore, dealerScore)
+    }
+    
+    func checkGameState(playerScore: Int, dealerScore: Int, stand: Bool) -> (winner: Bool, push: Bool, finished: Bool) {
+        if playerScore > 21 {
+            return (false, false, true)
+        }
+        if dealerScore > 21 {
+            return (true, false, true)
+        }
+        if stand {
+            if dealerScore > 17 {
+                if playerScore > dealerScore {
+                    return (true, false, true)
+                }
+                if dealerScore > playerScore {
+                    return (false, false, true)
+                }
+                if playerScore == dealerScore {
+                    return (false, true, true)
+                }
+            }
+            else {
+                return (false, false, false)
+            }
+        }
+        return (false , false, false)
+    }
     
 }
 

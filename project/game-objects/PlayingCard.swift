@@ -35,11 +35,13 @@ enum Color: String {
     case black
 }
 
-class PlayingCard {
+class PlayingCard: Identifiable {
+    let id = UUID()
     let suit: Suit
-    let value: Int
+    var value: Int
     let faceValue: FaceValue
     let color: Color
+    var hidden: Bool = false
     
     init(suit: Suit, faceValue: FaceValue) {
         self.suit = suit
@@ -82,7 +84,14 @@ class PlayingCard {
         }
     }
     
+    func hide() {
+        self.hidden = !self.hidden
+    }
+    
     func description() -> String {
+        if self.hidden {
+            return "🂠"
+        }
         return faceValue.rawValue + suit.rawValue
     }
     
