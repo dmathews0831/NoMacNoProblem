@@ -12,6 +12,12 @@ struct RouletteView: View {
     @Binding var path: [Route]
     @Binding var coins: Int
     
+    // Current bets
+    @State private var bets: [BetType: Int] = [:]
+    
+    // Current amount the player wants to bet with
+    @State private var currentBetAmount: Int = 10
+    
     // Roulette wheel variables
     @State private var wheel = RouletteWheel()
     @State private var rotation: Double = 0
@@ -19,35 +25,6 @@ struct RouletteView: View {
     
     // State variable which will display the table of bets
     @State private var showingBetSheet = false
-    
-    // Bets selected for roulette single player
-    @State private var selectedNumberBets: Set<Int> = []
-    
-    // Even/odd bet
-    @State private var isEvenBetSelected: Bool = false
-    @State private var isOddBetSelected: Bool = false
-    
-    //Color bets
-    @State private var isRedBetSelected: Bool = false
-    @State private var isBlackBetSelected: Bool = false
-    
-    // Range bets
-    @State private var is1to18BetSelected: Bool = false
-    @State private var is19to36BetSelected: Bool = false
-    @State private var is1st12BetSelected: Bool = false
-    @State private var is2nd12BetSelected: Bool = false
-    @State private var is3rd12BetSelected: Bool = false
-    
-    // 0 bet
-    @State private var is0BetSelected: Bool = false
-    
-    // 00 bet
-    @State private var is00BetSelected: Bool = false
-    
-    // Column bets
-    @State private var is1stColBetSelected: Bool = false
-    @State private var is2ndColBetSelected: Bool = false
-    @State private var is3rdColBetSelected: Bool = false
     
     let redNumbers: Set<Int> = [
         1,3,5,7,9,
@@ -101,24 +78,13 @@ struct RouletteView: View {
                         .transition(.opacity)
                     
                     // Bet sheet
-                    BetSheetView(coins: $coins,
-                                 selectedNumberBets: $selectedNumberBets,
-                                 isEvenBetSelected: $isEvenBetSelected,
-                                 isOddBetSelected: $isOddBetSelected,
-                                 isRedBetSelected: $isRedBetSelected,
-                                 isBlackBetSelected: $isBlackBetSelected,
-                                 is1to18BetSelected: $is1to18BetSelected,
-                                 is19to36BetSelected: $is19to36BetSelected,
-                                 is1st12BetSelected: $is1st12BetSelected,
-                                 is2nd12BetSelected: $is2nd12BetSelected,
-                                 is3rd12BetSelected: $is3rd12BetSelected,
-                                 is0BetSelected: $is0BetSelected,
-                                 is00BetSelected: $is00BetSelected,
-                                 is1stColBetSelected: $is1stColBetSelected,
-                                 is2ndColBetSelected: $is2ndColBetSelected,
-                                 is3rdColBetSelected: $is3rdColBetSelected,
-                                 showingBetSheet: $showingBetSheet)
-                        .transition(.move(edge: .bottom))
+                    BetSheetView(
+                        coins: $coins,
+                        bets: $bets,
+                        currentBetAmount: $currentBetAmount,
+                        showingBetSheet: $showingBetSheet
+                    )
+                    .transition(.move(edge: .bottom))
                 }
             }
             Spacer()
@@ -139,85 +105,64 @@ struct RouletteView: View {
 
         rotation += 360 * 5 + (360 - winningAngle)
         
-        // Payout
         if let winningNumber = Int(result.pocket.displayNumber) {
-            // Number Bet
-            if selectedNumberBets.contains(winningNumber) {
-                coins += betAmount * 36
-            }
-            // 0 Bet
-            if is0BetSelected && winningNumber == 0 {
-                coins += betAmount * 36
-            }
-            // 00 Bet
-            if is00BetSelected && winningNumber == 00 {
-                coins += betAmount * 36
-            }
-            // EVEN Bet (don't payout for 0)
-            if isEvenBetSelected && winningNumber % 2 == 0 && winningNumber != 0 {
-                coins += betAmount * 2
-            }
-            // ODD Bet (don't payout for 00)
-            if isOddBetSelected && winningNumber % 2 == 1 && winningNumber != -1 {
-                coins += betAmount * 2
-            }
-            // RED Bet
-            if isRedBetSelected && redNumbers.contains(winningNumber) {
-                coins += betAmount * 2
-            }
-            // BLACK Bet
-            if isBlackBetSelected && !redNumbers.contains(winningNumber) {
-                coins += betAmount * 2
-            }
-            // 1 to 18 Bet
-            if is1to18BetSelected && winningNumber >= 1 && winningNumber <= 18 {
-                coins += betAmount * 2
-            }
-            // 19 to 36 Bet
-            if is19to36BetSelected && winningNumber >= 19 && winningNumber <= 36 {
-                coins += betAmount * 2
-            }
-            // 1st 12 Bet
-            if is1st12BetSelected && winningNumber >= 1 && winningNumber <= 12 {
-                coins += betAmount * 3
-            }
-            // 2nd 12 Bet
-            if is2nd12BetSelected && winningNumber >= 13 && winningNumber <= 24 {
-                coins += betAmount * 3
-            }
-            // 3rd 12 Bet
-            if is3rd12BetSelected && winningNumber >= 25 && winningNumber <= 36 {
-                coins += betAmount * 3
-            }
-            // 1st Column Bet
-            if is1stColBetSelected && winningNumber % 3 == 1 {
-                coins += betAmount * 3
-            }
-            // 2nd Column Bet (don't payout for 00)
-            if is2ndColBetSelected && winningNumber % 3 == 2 && winningNumber != -1 {
-                coins += betAmount * 3
-            }
-            // 3rd Column Bet (don't payout for 0)
-            if is3rdColBetSelected && winningNumber % 3 == 0 && winningNumber != 0 {
-                coins += betAmount * 3
+            payout(for: winningNumber)
+        }
+    }
+    
+    // Hepler function to determine the payout based on the player's bets
+    func payout(for winningNumber: Int) {
+        for (bet, amount) in bets {
+            switch bet {
+            case .number(let num):
+                if num == winningNumber {
+                    coins += amount * 36
+                }
+            case .zero:
+                if winningNumber == 0 {
+                    coins += amount * 36
+                }
+            case .doubleZero:
+                if winningNumber == -1 {
+                    coins += amount * 36
+                }
+            case .even:
+                if winningNumber != 0 && winningNumber % 2 == 0 {
+                    coins += amount * 2
+                }
+            case .odd:
+                if winningNumber % 2 == 1 {
+                    coins += amount * 2
+                }
+            case .red:
+                if redNumbers.contains(winningNumber) {
+                    coins += amount * 2
+                }
+            case .black:
+                if !redNumbers.contains(winningNumber) && winningNumber != 0 {
+                    coins += amount * 2
+                }
+
+            case .low:
+                if (1...18).contains(winningNumber) {
+                    coins += amount * 2
+                }
+            case .high:
+                if (19...36).contains(winningNumber) {
+                    coins += amount * 2
+                }
+            case .dozen(let d):
+                if (((d - 1) * 12 + 1)...(d * 12)).contains(winningNumber) {
+                    coins += amount * 3
+                }
+            case .column(let c):
+                if winningNumber != 0 && winningNumber % 3 == c % 3 {
+                    coins += amount * 3
+                }
             }
         }
-        
-        // Clear the bets after the wheel is spun
-        selectedNumberBets.removeAll()
-        isEvenBetSelected = false
-        isOddBetSelected = false
-        isRedBetSelected = false
-        isBlackBetSelected = false
-        is1to18BetSelected = false
-        is19to36BetSelected = false
-        is1st12BetSelected = false
-        is2nd12BetSelected = false
-        is3rd12BetSelected = false
-        is0BetSelected = false
-        is00BetSelected = false
-        is1stColBetSelected = false
-        is2ndColBetSelected = false
-        is3rdColBetSelected = false
+
+        // Reset all bets
+        bets.removeAll()
     }
 }

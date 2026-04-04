@@ -7,38 +7,25 @@
 
 import SwiftUI
 
+// Types of bets
+enum BetType: Hashable {
+    case number(Int)
+    case zero
+    case doubleZero
+    case even
+    case odd
+    case red
+    case black
+    case low   // 1 - 18
+    case high  // 19 - 36
+    case dozen(Int)
+    case column(Int)
+}
+
 struct TableOfBets: View {
     
     @Binding var coins: Int
-    
-    // Number bet
-    @Binding var selectedBets: Set<Int>
-    
-    // Even/odd bets
-    @Binding var isEvenBetSelected: Bool
-    @Binding var isOddBetSelected: Bool
-    
-    //Color bets
-    @Binding var isRedBetSelected: Bool
-    @Binding var isBlackBetSelected: Bool
-    
-    // Range bets
-    @Binding var is1to18BetSelected: Bool
-    @Binding var is19to36BetSelected: Bool
-    @Binding var is1st12BetSelected: Bool
-    @Binding var is2nd12BetSelected: Bool
-    @Binding var is3rd12BetSelected: Bool
-    
-    // 0 bet
-    @Binding var is0BetSelected: Bool
-    
-    // 00 bet
-    @Binding var is00BetSelected: Bool
-    
-    // Column bets
-    @Binding var is1stColBetSelected: Bool
-    @Binding var is2ndColBetSelected: Bool
-    @Binding var is3rdColBetSelected: Bool
+    @Binding var bets: [BetType: Int]
     
     let betAmount: Int
     
@@ -58,95 +45,41 @@ struct TableOfBets: View {
             
             // First column
             VStack(spacing: rowSpacing) {
-                toggleBetCell("1 to 18", isSelected: is1to18BetSelected) {
-                    if is1to18BetSelected {
-                        is1to18BetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        is1to18BetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("1 to 18", isSelected: bets[.low] != nil) {
+                    placeBet(.low)
                 }
                 
-                toggleBetCell("EVEN", isSelected: isEvenBetSelected) {
-                    if isEvenBetSelected {
-                        isEvenBetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        isEvenBetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("EVEN", isSelected: bets[.even] != nil) {
+                    placeBet(.even)
                 }
                 
-                toggleBetCell("RED", isSelected: isRedBetSelected, color: SwiftUI.Color(.red)) {
-                    if isRedBetSelected {
-                        isRedBetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        isRedBetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("RED", isSelected: bets[.red] != nil) {
+                    placeBet(.red)
                 }
                 
-                toggleBetCell("BLACK", isSelected: isBlackBetSelected, color: SwiftUI.Color(.black)) {
-                    if isBlackBetSelected {
-                        isBlackBetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        isBlackBetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("BLACK", isSelected: bets[.black] != nil) {
+                    placeBet(.black)
                 }
                 
-                toggleBetCell("ODD", isSelected: isOddBetSelected) {
-                    if isOddBetSelected {
-                        isOddBetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        isOddBetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("ODD", isSelected: bets[.odd] != nil) {
+                    placeBet(.odd)
                 }
                 
-                toggleBetCell("19 to 36", isSelected: is19to36BetSelected) {
-                    if is19to36BetSelected {
-                        is19to36BetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        is19to36BetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("19 to 36", isSelected: bets[.high] != nil) {
+                    placeBet(.high)
                 }
             }
             
             // Second column
             VStack(spacing: rowSpacing) {
-                toggleBetCell("1st 12", isSelected: is1st12BetSelected) {
-                    if is1st12BetSelected {
-                        is1st12BetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        is1st12BetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("1st 12", isSelected: bets[.dozen(1)] != nil) {
+                    placeBet(.dozen(1))
                 }
-                toggleBetCell("2nd 12", isSelected: is2nd12BetSelected) {
-                    if is2nd12BetSelected {
-                        is2nd12BetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        is2nd12BetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("2nd 12", isSelected: bets[.dozen(2)] != nil) {
+                    placeBet(.dozen(2))
                 }
-                toggleBetCell("3rd 12", isSelected: is3rd12BetSelected) {
-                    if is3rd12BetSelected {
-                        is3rd12BetSelected = false
-                        coins += betAmount
-                    } else if coins >= betAmount {
-                        is3rd12BetSelected = true
-                        coins -= betAmount
-                    }
+                toggleBetCell("3rd 12", isSelected: bets[.dozen(3)] != nil) {
+                    placeBet(.dozen(3))
                 }
             }
             
@@ -155,23 +88,11 @@ struct TableOfBets: View {
                 
                 // Top row
                 HStack(spacing: 8) {
-                    toggleBetCell("0", isSelected: is0BetSelected) {
-                        if is0BetSelected {
-                            is0BetSelected = false
-                            coins += betAmount
-                        } else if coins >= betAmount {
-                            is0BetSelected = true
-                            coins -= betAmount
-                        }
+                    toggleBetCell("0", isSelected: bets[.zero] != nil) {
+                        placeBet(.zero)
                     }
-                    toggleBetCell("00", isSelected: is00BetSelected) {
-                        if is00BetSelected {
-                            is00BetSelected = false
-                            coins += betAmount
-                        } else if coins >= betAmount {
-                            is00BetSelected = true
-                            coins -= betAmount
-                        }
+                    toggleBetCell("00", isSelected: bets[.doubleZero] != nil) {
+                        placeBet(.doubleZero)
                     }
                 }
                 
@@ -187,32 +108,14 @@ struct TableOfBets: View {
                 
                 // Bottom row
                 HStack(spacing: 8) {
-                    toggleBetCell("2 to 1", isSelected: is1stColBetSelected) {
-                        if is1stColBetSelected {
-                            is1stColBetSelected = false
-                            coins += betAmount
-                        } else if coins >= betAmount {
-                            is1stColBetSelected = true
-                            coins -= betAmount
-                        }
+                    toggleBetCell("2 to 1", isSelected: bets[.column(1)] != nil) {
+                        placeBet(.column(1))
                     }
-                    toggleBetCell("2 to 1", isSelected: is2ndColBetSelected) {
-                        if is2ndColBetSelected {
-                            is2ndColBetSelected = false
-                            coins += betAmount
-                        } else if coins >= betAmount {
-                            is2ndColBetSelected = true
-                            coins -= betAmount
-                        }
+                    toggleBetCell("2 to 1", isSelected: bets[.column(2)] != nil) {
+                        placeBet(.column(2))
                     }
-                    toggleBetCell("2 to 1", isSelected: is3rdColBetSelected) {
-                        if is3rdColBetSelected {
-                            is3rdColBetSelected = false
-                            coins += betAmount
-                        } else if coins >= betAmount {
-                            is3rdColBetSelected = true
-                            coins -= betAmount
-                        }
+                    toggleBetCell("2 to 1", isSelected: bets[.column(3)] != nil) {
+                        placeBet(.column(3))
                     }
                 }
             }
@@ -223,42 +126,36 @@ struct TableOfBets: View {
     func heightForRows(_ rows: Int) -> CGFloat {
         CGFloat(rows) * rowHeight + CGFloat(rows - 1) * rowSpacing
     }
-}
-
-// Bet cell
-extension TableOfBets {
     
-    // NUMBER CELL (interactive)
-    func numberCell(_ number: Int) -> some View {
-        let isSelected = selectedBets.contains(number)
-        
-        return Button(action: {
-            if isSelected {
-                // Optional: allow deselect + refund
-                selectedBets.remove(number)
-                coins += betAmount
-            } else if coins >= betAmount {
-                selectedBets.insert(number)
-                coins -= betAmount
-            }
-        }) {
-            Text("\(number)")
-                .font(.caption)
-                .frame(maxWidth: .infinity, minHeight: 50)
-                .background(isSelected ? SwiftUI.Color(.yellow) : numberColor(number))
-                .foregroundColor(.white)
-                .cornerRadius(6)
+    func placeBet(_ type: BetType) {
+        if let existingAmount = bets[type] {
+            // Remove bet and refund
+            coins += existingAmount
+            bets.removeValue(forKey: type)
+        }
+        else {
+            // Place new bet
+            guard coins >= betAmount else { return }
+            bets[type] = betAmount
+            coins -= betAmount
         }
     }
     
-    // Static cells (non-betting for now)
-    func staticCell(_ text: String, color: SwiftUI.Color = SwiftUI.Color(.green)) -> some View {
-        Text(text)
-            .font(.caption)
-            .frame(maxWidth: .infinity, minHeight: 50)
-            .background(color)
-            .foregroundColor(.white)
-            .cornerRadius(6)
+    func numberCell(_ number: Int) -> some View {
+        let type = BetType.number(number)
+        let amount = bets[type] ?? 0
+
+        return Button(action: {
+            placeBet(type)
+        }) {
+            Text("\(number)\n\(amount > 0 ? "\(amount)" : "")")
+                .font(.caption)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .background(amount > 0 ? SwiftUI.Color.yellow : numberColor(number))
+                .foregroundColor(.white)
+                .cornerRadius(6)
+        }
     }
     
     // Toggle cells
@@ -287,34 +184,8 @@ extension TableOfBets {
 struct BetSheetView: View {
     
     @Binding var coins: Int
-    @Binding var selectedNumberBets: Set<Int>
-    
-    // Even/odd bets
-    @Binding var isEvenBetSelected: Bool
-    @Binding var isOddBetSelected: Bool
-    
-    //Color bets
-    @Binding var isRedBetSelected: Bool
-    @Binding var isBlackBetSelected: Bool
-    
-    // Range bets
-    @Binding var is1to18BetSelected: Bool
-    @Binding var is19to36BetSelected: Bool
-    @Binding var is1st12BetSelected: Bool
-    @Binding var is2nd12BetSelected: Bool
-    @Binding var is3rd12BetSelected: Bool
-    
-    // 0 Bet
-    @Binding var is0BetSelected: Bool
-    
-    // 00 bet
-    @Binding var is00BetSelected: Bool
-    
-    // Column bets
-    @Binding var is1stColBetSelected: Bool
-    @Binding var is2ndColBetSelected: Bool
-    @Binding var is3rdColBetSelected: Bool
-    
+    @Binding var bets: [BetType: Int]
+    @Binding var currentBetAmount: Int
     @Binding var showingBetSheet: Bool
     
     var body: some View {
@@ -327,27 +198,30 @@ struct BetSheetView: View {
                     .font(.headline)
                     .padding()
                 
+                VStack {
+                    Text("Bet Amount: \(currentBetAmount)")
+                    if coins < 10 {
+                        Text("Not enough coins to place a bet")
+                            .foregroundColor(.red)
+                    }
+                    Slider(
+                        value: Binding(
+                            get: { Double(currentBetAmount) },
+                            set: { newValue in
+                                currentBetAmount = max(0, Int(newValue / 10) * 10)
+                            }
+                        ),
+                        in: 0...Double(max(coins, 10)),
+                        step: 10
+                    )
+                    .disabled(coins < 10)
+                    
+                }
+                .padding()
+                
                 // Table of bets
                 ScrollView {
-                    TableOfBets(
-                        coins: $coins,
-                        selectedBets: $selectedNumberBets,
-                        isEvenBetSelected: $isEvenBetSelected,
-                        isOddBetSelected: $isOddBetSelected,
-                        isRedBetSelected: $isRedBetSelected,
-                        isBlackBetSelected: $isBlackBetSelected,
-                        is1to18BetSelected: $is1to18BetSelected,
-                        is19to36BetSelected: $is19to36BetSelected,
-                        is1st12BetSelected: $is1st12BetSelected,
-                        is2nd12BetSelected: $is2nd12BetSelected,
-                        is3rd12BetSelected: $is3rd12BetSelected,
-                        is0BetSelected: $is0BetSelected,
-                        is00BetSelected: $is00BetSelected,
-                        is1stColBetSelected: $is1stColBetSelected,
-                        is2ndColBetSelected: $is2ndColBetSelected,
-                        is3rdColBetSelected: $is3rdColBetSelected,
-                        betAmount: betAmount
-                    )
+                    TableOfBets(coins: $coins, bets: $bets, betAmount: currentBetAmount)
                 }
                 
                 // Button to return to the wheel
