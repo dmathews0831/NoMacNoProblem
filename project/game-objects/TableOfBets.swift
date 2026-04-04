@@ -16,10 +16,10 @@ enum BetType: Hashable {
     case odd
     case red
     case black
-    case low   // 1 - 18
-    case high  // 19 - 36
-    case dozen(Int)
-    case column(Int)
+    case low            // 1-18
+    case high           // 19-36
+    case dozen(Int)     // 1 for 1-12, 2 for 13-24, 3 for 25-36
+    case column(Int)    // 1 for 1st col, 2 for 2nd col, 3 for 3rd col.
 }
 
 struct TableOfBets: View {
@@ -27,9 +27,10 @@ struct TableOfBets: View {
     @Binding var coins: Int
     @Binding var bets: [BetType: Int]
     
+    // Bet amount set by the player
     let betAmount: Int
     
-    // Real roulette coloring
+    // Roulette number coloring
     let redNumbers: Set<Int> = [
         1,3,5,7,9,
         12,14,16,18,
@@ -127,6 +128,7 @@ struct TableOfBets: View {
         CGFloat(rows) * rowHeight + CGFloat(rows - 1) * rowSpacing
     }
     
+    // Place a bet when the player clicks on a cell on the table
     func placeBet(_ type: BetType) {
         if let existingAmount = bets[type] {
             // Remove bet and refund

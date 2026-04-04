@@ -69,30 +69,43 @@ struct ContentView: View {
                     switch route {
                     case .mainMenu:
                         MainMenuView(path: $path, coins: $coins)
+                            .navigationBarBackButtonHidden(true)
                     case .playSelect:
                         PlaySelectView(path: $path, coins: $coins)
+                            .navigationBarBackButtonHidden(true)
                     case .settings:
                         SettingsView(path: $path)
+                            .navigationBarBackButtonHidden(true)
                     case .profile:
                         ProfileView(path: $path)
+                            .navigationBarBackButtonHidden(true)
                     case .gameSelectSP:
                         GameSelectSPView(path: $path, coins: $coins, selectedGame: $selectedGame)
+                            .navigationBarBackButtonHidden(true)
                     case .CPUSelect:
                         CPUSelectView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
+                            .navigationBarBackButtonHidden(true)
                     case .joinHost:
                         JoinHostView(path: $path, coins: $coins, gameID: $gameID)
+                            .navigationBarBackButtonHidden(true)
                     case .enterGameID:
                         EnterGameIDView(path: $path, coins: $coins, selectedGame: $selectedGame, gameID: $gameID)
+                            .navigationBarBackButtonHidden(true)
                     case .gameSelectMP:
                         GameSelectMPView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
+                            .navigationBarBackButtonHidden(true)
                     case .waitingRoom:
                         WaitingRoomView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
+                            .navigationBarBackButtonHidden(true)
                     case .playRoulette:
                         RouletteView(path: $path, coins: $coins)
+                            .navigationBarBackButtonHidden(true)
                     case .playBlackjack:
                         BlackjackView(path: $path, coins: $coins)
+                            .navigationBarBackButtonHidden(true)
                     case .finish:
                         GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
+                            .navigationBarBackButtonHidden(true)
                     }
                 }
         }
