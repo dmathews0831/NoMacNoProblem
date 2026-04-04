@@ -8,24 +8,6 @@
 import SwiftUI
 import Foundation
 
-// Screen states for the UI
-enum Screen {
-    case mainMenu
-    case playSelect
-    case settings
-    case profile
-    case gameSelectSP
-    case joinHost
-    case gameSelectMP
-    case CPUSelect
-    case enterGameID
-    case waitingRoom
-    case playRoulette
-    case playBlackjack
-    case finish
-    
-}
-
 enum Route: Hashable {
     case mainMenu
     case playSelect
@@ -58,9 +40,6 @@ let maxHumans = 4
 let betAmount = 10
 
 struct ContentView: View {
-
-    // State variable which controls which screen is being displayed
-    @State private var currentScreen: Screen = .mainMenu
     
     @State private var path: [Route] = [];
     
@@ -76,16 +55,12 @@ struct ContentView: View {
     // The game ID the user enters to join a game
     @State private var gameID: String = ""
     
-
-    
     // Initial player balance before a game is played
     @State private var startingCoins: Int = 0
     
     // Initialize stored variables
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
-    
-
     
     var body: some View {
         NavigationStack(path: $path) {

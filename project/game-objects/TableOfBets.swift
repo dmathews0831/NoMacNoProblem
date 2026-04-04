@@ -9,28 +9,145 @@ import SwiftUI
 
 struct TableOfBets: View {
     
-    @Binding var selectedBets: Set<Int>
     @Binding var coins: Int
+    
+    // Number bet
+    @Binding var selectedBets: Set<Int>
+    
+    // Even/odd bets
+    @Binding var isEvenBetSelected: Bool
+    @Binding var isOddBetSelected: Bool
+    
+    //Color bets
+    @Binding var isRedBetSelected: Bool
+    @Binding var isBlackBetSelected: Bool
+    
+    // Range bets
+    @Binding var is1to18BetSelected: Bool
+    @Binding var is19to36BetSelected: Bool
+    @Binding var is1st12BetSelected: Bool
+    @Binding var is2nd12BetSelected: Bool
+    @Binding var is3rd12BetSelected: Bool
+    
+    // 0 bet
+    @Binding var is0BetSelected: Bool
+    
+    // 00 bet
+    @Binding var is00BetSelected: Bool
+    
+    // Column bets
+    @Binding var is1stColBetSelected: Bool
+    @Binding var is2ndColBetSelected: Bool
+    @Binding var is3rdColBetSelected: Bool
+    
     let betAmount: Int
+    
+    // Real roulette coloring
+    let redNumbers: Set<Int> = [
+        1,3,5,7,9,
+        12,14,16,18,
+        19,21,23,25,27,
+        30,32,34,36
+    ]
+    
+    let rowHeight: CGFloat = 50
+    let rowSpacing: CGFloat = 8
     
     var body: some View {
         HStack(spacing: 8) {
             
-            // First column (non-interactive for now)
-            VStack(spacing: 8) {
-                staticCell("1 to 18")
-                staticCell("EVEN")
-                staticCell("RED", color: .red)
-                staticCell("BLACK", color: .black)
-                staticCell("ODD")
-                staticCell("19 to 36")
+            // First column
+            VStack(spacing: rowSpacing) {
+                toggleBetCell("1 to 18", isSelected: is1to18BetSelected) {
+                    if is1to18BetSelected {
+                        is1to18BetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        is1to18BetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                
+                toggleBetCell("EVEN", isSelected: isEvenBetSelected) {
+                    if isEvenBetSelected {
+                        isEvenBetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        isEvenBetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                
+                toggleBetCell("RED", isSelected: isRedBetSelected, color: SwiftUI.Color(.red)) {
+                    if isRedBetSelected {
+                        isRedBetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        isRedBetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                
+                toggleBetCell("BLACK", isSelected: isBlackBetSelected, color: SwiftUI.Color(.black)) {
+                    if isBlackBetSelected {
+                        isBlackBetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        isBlackBetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                
+                toggleBetCell("ODD", isSelected: isOddBetSelected) {
+                    if isOddBetSelected {
+                        isOddBetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        isOddBetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                
+                toggleBetCell("19 to 36", isSelected: is19to36BetSelected) {
+                    if is19to36BetSelected {
+                        is19to36BetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        is19to36BetSelected = true
+                        coins -= betAmount
+                    }
+                }
             }
             
             // Second column
-            VStack(spacing: 8) {
-                staticCell("1st 12")
-                staticCell("2nd 12")
-                staticCell("3rd 12")
+            VStack(spacing: rowSpacing) {
+                toggleBetCell("1st 12", isSelected: is1st12BetSelected) {
+                    if is1st12BetSelected {
+                        is1st12BetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        is1st12BetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                toggleBetCell("2nd 12", isSelected: is2nd12BetSelected) {
+                    if is2nd12BetSelected {
+                        is2nd12BetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        is2nd12BetSelected = true
+                        coins -= betAmount
+                    }
+                }
+                toggleBetCell("3rd 12", isSelected: is3rd12BetSelected) {
+                    if is3rd12BetSelected {
+                        is3rd12BetSelected = false
+                        coins += betAmount
+                    } else if coins >= betAmount {
+                        is3rd12BetSelected = true
+                        coins -= betAmount
+                    }
+                }
             }
             
             // Main table
@@ -38,8 +155,24 @@ struct TableOfBets: View {
                 
                 // Top row
                 HStack(spacing: 8) {
-                    staticCell("0", color: .green)
-                    staticCell("00", color: .green)
+                    toggleBetCell("0", isSelected: is0BetSelected) {
+                        if is0BetSelected {
+                            is0BetSelected = false
+                            coins += betAmount
+                        } else if coins >= betAmount {
+                            is0BetSelected = true
+                            coins -= betAmount
+                        }
+                    }
+                    toggleBetCell("00", isSelected: is00BetSelected) {
+                        if is00BetSelected {
+                            is00BetSelected = false
+                            coins += betAmount
+                        } else if coins >= betAmount {
+                            is00BetSelected = true
+                            coins -= betAmount
+                        }
+                    }
                 }
                 
                 // Number grid
@@ -54,13 +187,41 @@ struct TableOfBets: View {
                 
                 // Bottom row
                 HStack(spacing: 8) {
-                    staticCell("2 to 1")
-                    staticCell("2 to 1")
-                    staticCell("2 to 1")
+                    toggleBetCell("2 to 1", isSelected: is1stColBetSelected) {
+                        if is1stColBetSelected {
+                            is1stColBetSelected = false
+                            coins += betAmount
+                        } else if coins >= betAmount {
+                            is1stColBetSelected = true
+                            coins -= betAmount
+                        }
+                    }
+                    toggleBetCell("2 to 1", isSelected: is2ndColBetSelected) {
+                        if is2ndColBetSelected {
+                            is2ndColBetSelected = false
+                            coins += betAmount
+                        } else if coins >= betAmount {
+                            is2ndColBetSelected = true
+                            coins -= betAmount
+                        }
+                    }
+                    toggleBetCell("2 to 1", isSelected: is3rdColBetSelected) {
+                        if is3rdColBetSelected {
+                            is3rdColBetSelected = false
+                            coins += betAmount
+                        } else if coins >= betAmount {
+                            is3rdColBetSelected = true
+                            coins -= betAmount
+                        }
+                    }
                 }
             }
         }
         .padding()
+    }
+    
+    func heightForRows(_ rows: Int) -> CGFloat {
+        CGFloat(rows) * rowHeight + CGFloat(rows - 1) * rowSpacing
     }
 }
 
@@ -100,9 +261,26 @@ extension TableOfBets {
             .cornerRadius(6)
     }
     
+    // Toggle cells
+    func toggleBetCell(
+        _ text: String,
+        isSelected: Bool,
+        color: SwiftUI.Color = .green,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Text(text)
+                .font(.caption)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .background(isSelected ? SwiftUI.Color.yellow : color)
+                .foregroundColor(.white)
+                .cornerRadius(6)
+        }
+    }
+    
     // Basic red/black coloring
     func numberColor(_ number: Int) -> SwiftUI.Color {
-        number % 2 == 0 ? .black : .red
+        redNumbers.contains(number) ? .red : .black
     }
 }
 
@@ -110,6 +288,33 @@ struct BetSheetView: View {
     
     @Binding var coins: Int
     @Binding var selectedNumberBets: Set<Int>
+    
+    // Even/odd bets
+    @Binding var isEvenBetSelected: Bool
+    @Binding var isOddBetSelected: Bool
+    
+    //Color bets
+    @Binding var isRedBetSelected: Bool
+    @Binding var isBlackBetSelected: Bool
+    
+    // Range bets
+    @Binding var is1to18BetSelected: Bool
+    @Binding var is19to36BetSelected: Bool
+    @Binding var is1st12BetSelected: Bool
+    @Binding var is2nd12BetSelected: Bool
+    @Binding var is3rd12BetSelected: Bool
+    
+    // 0 Bet
+    @Binding var is0BetSelected: Bool
+    
+    // 00 bet
+    @Binding var is00BetSelected: Bool
+    
+    // Column bets
+    @Binding var is1stColBetSelected: Bool
+    @Binding var is2ndColBetSelected: Bool
+    @Binding var is3rdColBetSelected: Bool
+    
     @Binding var showingBetSheet: Bool
     
     var body: some View {
@@ -125,8 +330,22 @@ struct BetSheetView: View {
                 // Table of bets
                 ScrollView {
                     TableOfBets(
-                        selectedBets: $selectedNumberBets,
                         coins: $coins,
+                        selectedBets: $selectedNumberBets,
+                        isEvenBetSelected: $isEvenBetSelected,
+                        isOddBetSelected: $isOddBetSelected,
+                        isRedBetSelected: $isRedBetSelected,
+                        isBlackBetSelected: $isBlackBetSelected,
+                        is1to18BetSelected: $is1to18BetSelected,
+                        is19to36BetSelected: $is19to36BetSelected,
+                        is1st12BetSelected: $is1st12BetSelected,
+                        is2nd12BetSelected: $is2nd12BetSelected,
+                        is3rd12BetSelected: $is3rd12BetSelected,
+                        is0BetSelected: $is0BetSelected,
+                        is00BetSelected: $is00BetSelected,
+                        is1stColBetSelected: $is1stColBetSelected,
+                        is2ndColBetSelected: $is2ndColBetSelected,
+                        is3rdColBetSelected: $is3rdColBetSelected,
                         betAmount: betAmount
                     )
                 }
