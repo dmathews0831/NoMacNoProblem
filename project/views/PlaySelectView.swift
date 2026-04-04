@@ -33,7 +33,7 @@ struct PlaySelectView: View {
             Spacer()
             
             Button("Back") {
-                path.append(.mainMenu)
+                path.removeLast()
             }
             .padding()
         }

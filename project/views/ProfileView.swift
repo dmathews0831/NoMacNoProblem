@@ -17,7 +17,7 @@ struct ProfileView: View {
             Text("Profile Screen")
             Spacer()
             Button("Back") {
-                path.append(.mainMenu)
+                path.removeLast()
             }
         }
     }

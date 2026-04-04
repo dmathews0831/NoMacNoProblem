@@ -17,7 +17,7 @@ struct SettingsView: View {
             Text("Settings Screen")
             Spacer()
             Button("Back") {
-                path.append(.mainMenu)
+                path.removeLast()
             }
         }
     }

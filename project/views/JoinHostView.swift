@@ -41,7 +41,7 @@ struct JoinHostView: View {
             Spacer()
             
             Button("Back") {
-                path.append(.playSelect)
+                path.removeLast()
             }
             .padding()
         }

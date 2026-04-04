@@ -15,12 +15,11 @@ struct GameFinishedView: View {
     @Binding var selectedGame: Game?
     @Binding var selectedPlayerCount: Int?
     @Binding var selectedCPUCount: Int?
-    @Binding var availableCPUOptions: [Int]
     
     var body: some View {
         
         // Compute the players winnings/losses
-        var netWinnings: Int = coins - startingCoins
+        let netWinnings: Int = coins - startingCoins
         
         VStack {
             BalanceView(coins: $coins)

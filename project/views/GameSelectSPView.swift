@@ -37,7 +37,7 @@ struct GameSelectSPView: View {
             Spacer()
             
             Button("Back") {
-                path.append(.playSelect)
+                path.removeLast()
             }
             .padding()
         }

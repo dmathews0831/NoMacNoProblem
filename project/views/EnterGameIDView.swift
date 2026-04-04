@@ -13,7 +13,12 @@ struct EnterGameIDView: View {
     @Binding var coins: Int
     @Binding var selectedGame: Game?
     @Binding var gameID: String
-    @Binding var isValidGameID: Bool
+    //@Binding var isValidGameID: Bool
+    
+    // Boolean which determines if the user enters a valid game ID
+    var isValidGameID: Bool {
+        gameID.count == 3 && gameID.allSatisfy { $0.isNumber }
+    }
     
     var body: some View {
         VStack {
@@ -51,7 +56,7 @@ struct EnterGameIDView: View {
             Spacer()
             
             Button("Back") {
-                path.append(.joinHost)
+                path.removeLast()
             }
         }
     }

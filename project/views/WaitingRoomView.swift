@@ -14,7 +14,6 @@ struct WaitingRoomView: View {
     @Binding var selectedGame: Game?
     @Binding var selectedPlayerCount: Int?
     @Binding var selectedCPUCount: Int?
-    @Binding var availableCPUOptions: [Int]
     @Binding var startingCoins: Int
     
     var body: some View {

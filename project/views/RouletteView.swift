@@ -11,12 +11,17 @@ struct RouletteView: View {
     
     @Binding var path: [Route]
     @Binding var coins: Int
-    @Binding var showingBetSheet: Bool
-    @Binding var selectedNumberBets: Set<Int>
     
-    @Binding var wheel: RouletteWheel
-    @Binding var rotation: Double
-    @Binding var winningPocket: RoulettePocket?
+    // Roulette wheel variables
+    @State private var wheel = RouletteWheel()
+    @State private var rotation: Double = 0
+    @State private var winningPocket: RoulettePocket? = nil
+    
+    // State variable which will display the table of bets
+    @State private var showingBetSheet = false
+    
+    // Bets selected for roulette single player
+    @State private var selectedNumberBets: Set<Int> = []
     
     var body: some View {
         VStack {

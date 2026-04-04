@@ -14,7 +14,13 @@ struct GameSelectMPView: View {
     @Binding var selectedGame: Game?
     @Binding var selectedPlayerCount: Int?
     @Binding var selectedCPUCount: Int?
-    @Binding var availableCPUOptions: [Int]
+    //@Binding var availableCPUOptions: [Int]
+    
+    // List of available CPUs based on the selected number of players during multiplayer select (host)
+    var availableCPUOptions: [Int] {
+        guard let humans = selectedPlayerCount else { return [] }
+        return Array(0...(maxPlayers - humans))
+    }
     
     var body: some View {
         VStack {
@@ -98,7 +104,7 @@ struct GameSelectMPView: View {
             Spacer()
             
             Button("Back") {
-                path.append(.joinHost)
+                path.removeLast()
                 selectedGame = nil
                 selectedPlayerCount = nil
                 selectedCPUCount = nil
