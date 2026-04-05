@@ -63,6 +63,7 @@ struct ContentView: View {
     @AppStorage("coins") var coins: Int = 0
     
     var body: some View {
+        // Main navigation stack for switching between screens
         NavigationStack(path: $path) {
             MainMenuView(path: $path, coins: $coins)
                 .navigationDestination(for: Route.self) { route in

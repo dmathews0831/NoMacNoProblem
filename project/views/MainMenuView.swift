@@ -26,6 +26,10 @@ struct MainMenuView: View {
             
             Spacer()
             
+            Text("Pocket Casino")
+            
+            Spacer()
+            
             Button("PLAY") {
                 path.append(.playSelect)
             }
