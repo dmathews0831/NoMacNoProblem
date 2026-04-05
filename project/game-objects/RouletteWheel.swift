@@ -115,12 +115,12 @@ struct WheelSlice: View {
                 Text(label)
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(.white)
-                    // Rotate into slice position
-                    .rotationEffect(midAngle)
-                    // Push outward
-                    .offset(y: -radius * 0.85)
                     // Rotate so top points toward center
-                    .rotationEffect(startAngle)
+                    .rotationEffect(midAngle / 64)
+                    // Push outward
+                    .offset(y: -radius * 0.95)
+                    // Rotate into slice position
+                    .rotationEffect(midAngle + Angle(degrees: 90.0))
             }
         }
     }

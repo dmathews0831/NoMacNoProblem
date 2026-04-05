@@ -26,6 +26,8 @@ struct RouletteView: View {
     // State variable which will display the table of bets
     @State private var showingBetSheet = false
     
+    @State var isWheelSpinning: Bool = false
+    
     let redNumbers: Set<Int> = [
         1,3,5,7,9,
         12,14,16,18,
@@ -40,9 +42,13 @@ struct RouletteView: View {
             ZStack {
                 VStack {
                     ZStack {
+                        Circle()
+                            .stroke(.black, lineWidth: 2)
+                            .frame(width: 300, height: 300)
+                            .shadow(radius: 50)
                         // Wheel
-                        RouletteWheelView(wheel: wheel, rotation: $rotation)
-                            .frame(width: 250, height: 250)
+                        RouletteWheelView(rotation: $rotation, wheel: wheel)
+                            .frame(width: 300, height: 300)
                         // Center of wheel
                         Circle()
                             .stroke(SwiftUI.Color.black, lineWidth: 2)
@@ -61,7 +67,10 @@ struct RouletteView: View {
                         
                     }
                     .onTapGesture {
-                        spinWheel()
+                        if !isWheelSpinning {
+                            spinWheel()
+                            //isWheelSpinning = true
+                        }
                     }
                     // Button to pull up the bet table
                     Button("BET") {

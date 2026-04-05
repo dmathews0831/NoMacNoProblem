@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct RouletteWheelView: View {
-
-    let wheel: RouletteWheel
+    
     @Binding var rotation: Double
+    
+    let wheel: RouletteWheel
+    let numSlices: Int = 38
+    let winningIndex: Int?
 
     var body: some View {
         ZStack {
             ForEach(0..<wheel.pockets.count, id: \.self) { index in
-
-                let sliceAngle = 360.0 / 38.0
+                let sliceAngle: Double = 360.0 / Double(numSlices)
                 let start = Angle(degrees: sliceAngle * Double(index))
                 let end   = Angle(degrees: sliceAngle * Double(index + 1))
 
