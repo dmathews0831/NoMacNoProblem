@@ -22,6 +22,10 @@ enum Route: Hashable {
     case playRoulette
     case playBlackjack
     case finish
+    case blackjackBet
+    case blackjackGame
+    case blackjackResult
+
 }
 
 // Game states
@@ -107,6 +111,8 @@ struct ContentView: View {
                     case .finish:
                         GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
                             .navigationBarBackButtonHidden(true)
+                    default:
+                        EmptyView()
                     }
                 }
         }
