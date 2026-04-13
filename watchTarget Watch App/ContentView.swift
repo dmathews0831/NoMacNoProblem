@@ -22,7 +22,6 @@ enum Route: Hashable {
     case playRoulette
     case playBlackjack
     case finish
-    case blackjackBet
     case blackjackGame
     case blackjackResult
 
@@ -62,9 +61,29 @@ struct ContentView: View {
     // Initial player balance before a game is played
     @State private var startingCoins: Int = 0
     
+    @State private var bjDealer = BlackjackDealer(deck: Deck())
+    @State private var bjBetAmount: Double = 10
+    @State private var bjDealerHand: [PlayingCard] = []
+    @State private var bjPlayerHand: [PlayingCard] = []
+    @State private var bjDealerScore: Int = 0
+    @State private var bjPlayerScore: Int = 0
+    @State private var bjResultMessage: String = ""
+    
     // Initialize stored variables
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
+    
+    func resetBlackjack() {
+        bjBetAmount = 10
+        bjDealer.betAmount = 0
+        bjDealer.newDeck()
+        bjPlayerHand = []
+        bjDealerHand = []
+        bjPlayerScore = 0
+        bjDealerScore = 0
+        bjResultMessage = ""
+        path.removeLast(min(2, path.count))
+    }
     
     var body: some View {
         // Main navigation stack for switching between screens
@@ -106,13 +125,38 @@ struct ContentView: View {
                         RouletteView(path: $path, coins: $coins)
                             .navigationBarBackButtonHidden(true)
                     case .playBlackjack:
-                        BlackjackView(path: $path, coins: $coins)
+                        BlackjackView(path: $path,
+                                      coins: $coins,
+                                      dealer: $bjDealer,
+                                      betAmount: $bjBetAmount,
+                                      dealerHand: $bjDealerHand,
+                                      playerHand: $bjPlayerHand,
+                                      dealerScore: $bjDealerScore,
+                                      playerScore: $bjPlayerScore)
                             .navigationBarBackButtonHidden(true)
                     case .finish:
                         GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
                             .navigationBarBackButtonHidden(true)
-                    default:
-                        EmptyView()
+                    case .blackjackGame:
+                        BlackjackGameView(
+                            path: $path,
+                            coins: $coins,
+                            dealer: $bjDealer,
+                            dealerHand: $bjDealerHand,
+                            playerHand: $bjPlayerHand,
+                            dealerScore: $bjDealerScore,
+                            playerScore: $bjPlayerScore,
+                            resultMessage: $bjResultMessage
+                        )
+                        .navigationBarBackButtonHidden(true)
+                    case .blackjackResult:
+                        BlackjackResultView(
+                            path: $path,
+                            coins: $coins,
+                            resultMessage: bjResultMessage,
+                            onPlayAgain: resetBlackjack
+                        )
+                        .navigationBarBackButtonHidden(true)
                     }
                 }
         }

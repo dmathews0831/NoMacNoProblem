@@ -11,14 +11,12 @@ struct BlackjackView: View {
     
     @Binding var path: [Route]
     @Binding var coins: Int
-
-    @State private var dealer = BlackjackDealer(deck: Deck())
-    @State private var betAmount: Double = 10
-    @State private var dealerHand: [PlayingCard] = []
-    @State private var playerHand: [PlayingCard] = []
-    @State private var dealerScore: Int = 0
-    @State private var playerScore: Int = 0
-    @State private var resultMessage: String = ""
+    @Binding var dealer: BlackjackDealer
+    @Binding var betAmount: Double
+    @Binding var dealerHand: [PlayingCard]
+    @Binding var playerHand: [PlayingCard]
+    @Binding var dealerScore: Int
+    @Binding var playerScore: Int
     
     func startGame() {
         dealer.takeBet(amount: Int(betAmount))
@@ -34,19 +32,6 @@ struct BlackjackView: View {
         dealerHand.append(hiddenCard)
 
         updateScores()
-    }
-
-    func resetBlackjack() {
-        betAmount = 10
-        dealer.betAmount = 0
-        dealer.newDeck()
-        playerHand = []
-        dealerHand = []
-        playerScore = 0
-        dealerScore = 0
-        resultMessage = ""
-        // Pop back to this screen (removes result + game screens)
-        path.removeLast(min(2, path.count))
     }
 
     func updateScores() {
@@ -71,30 +56,6 @@ struct BlackjackView: View {
                 path.append(.blackjackGame)
             }
             .disabled(coins < 10)
-        }
-        .navigationDestination(for: Route.self) { route in
-            switch route {
-            case .blackjackGame:
-                BlackjackGameView(
-                    path: $path,
-                    coins: $coins,
-                    dealer: $dealer,
-                    dealerHand: $dealerHand,
-                    playerHand: $playerHand,
-                    dealerScore: $dealerScore,
-                    playerScore: $playerScore,
-                    resultMessage: $resultMessage
-                )
-            case .blackjackResult:
-                BlackjackResultView(
-                    path: $path,
-                    coins: $coins,
-                    resultMessage: resultMessage,
-                    onPlayAgain: resetBlackjack
-                )
-            default:
-                EmptyView()
-            }
         }
     }
 }
