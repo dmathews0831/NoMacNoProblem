@@ -6,16 +6,43 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct ProfileView: View {
     
     @Binding var path: [Route]
     
+    // Authentication view model
+    @StateObject private var authVM = AuthViewModel()
+        
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
+            Text("Profile")
+                .font(.title)
+                .padding()
             Spacer()
-            Text("Profile Screen")
+            // Check if the user is logged in
+            // If so, display log out button
+            if authVM.isLoggedIn {
+                Text("Logged in!")
+                Button("Log Out") {
+                    authVM.isLoggedIn = false
+                    UserDefaults.standard.removeObject(forKey: "userID")
+                }
+            }
+            // Otherwise, display sign-in with Apple ID button
+            else {
+                SignInWithAppleButton(
+                    .signIn,
+                    onRequest: authVM.handleSignInWithAppleRequest,
+                    onCompletion: authVM.handleSignInWithAppleCompletion
+                )
+                .signInWithAppleButtonStyle(.black)
+                .frame(height: 50)
+                .padding()
+            }
             Spacer()
+            // Back button
             Button("Back") {
                 path.removeLast()
             }

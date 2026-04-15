@@ -47,7 +47,7 @@ struct RouletteView: View {
                             .frame(width: 300, height: 300)
                             .shadow(radius: 50)
                         // Wheel
-                        RouletteWheelView(rotation: $rotation, wheel: wheel, winningIndex: Int?(winningPocket!.number))
+                        RouletteWheelView(rotation: $rotation, wheel: wheel)
                             .frame(width: 300, height: 300)
                         // Center of wheel
                         Circle()

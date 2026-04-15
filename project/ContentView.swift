@@ -62,6 +62,9 @@ struct ContentView: View {
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
     
+    // Variable the user can set to change to dark mode
+    @AppStorage("darkModeEnabled") var darkModeEnabled: Bool = true;
+    
     var body: some View {
         // Main navigation stack for switching between screens
         NavigationStack(path: $path) {
