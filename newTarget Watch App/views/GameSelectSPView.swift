@@ -21,14 +21,14 @@ struct GameSelectSPView: View {
             Text("Which game would you like to play?")
                 .font(.title2)
             Button("Roulette") {
-                path.append(.CPUSelect)
+                path.append(.playRoulette)
                 selectedGame = .roulette
             }
             .font(.title)
             .buttonStyle(.borderedProminent)
             
             Button("Blackjack") {
-                path.append(.CPUSelect)
+                path.append(.playBlackjack)
                 selectedGame = .blackjack
             }
             .font(.title)

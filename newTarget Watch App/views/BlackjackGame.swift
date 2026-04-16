@@ -24,7 +24,7 @@ struct BlackjackGameView: View {
                 HStack {
                     ForEach(dealerHand) { card in
                         Text(card.description())
-                            .padding(8)
+                            .padding(3)
                             .cornerRadius(6)
                     }
                 }
@@ -37,7 +37,7 @@ struct BlackjackGameView: View {
                 HStack {
                     ForEach(playerHand) { card in
                         Text(card.description())
-                            .padding(8)
+                            .padding(3)
                             .cornerRadius(6)
                     }
                 }
@@ -47,9 +47,12 @@ struct BlackjackGameView: View {
 
             HStack {
                 Button("Hit") { handleHit() }
+                    .font(.footnote)
                 Button("Stand") { handleStand() }
+                    .font(.footnote)
                 Button("Double") { handleDouble() }
                     .disabled(coins < dealer.betAmount)
+                    .font(.footnote)
             }
         }
         .navigationBarBackButtonHidden(true) // Don't allow back during a hand
@@ -63,7 +66,9 @@ struct BlackjackGameView: View {
 
     func goToResult(message: String) {
         resultMessage = message
-        path.append(.blackjackResult)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            path.append(.blackjackResult)
+        }
     }
 
     func handleHit() {

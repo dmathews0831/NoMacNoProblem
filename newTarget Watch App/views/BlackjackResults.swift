@@ -10,7 +10,7 @@ import SwiftUI
 struct BlackjackResultView: View {
     @Binding var path: [Route]
     @Binding var coins: Int
-    let resultMessage: String
+    @Binding var resultMessage: String
     let onPlayAgain: () -> Void
 
     var body: some View {

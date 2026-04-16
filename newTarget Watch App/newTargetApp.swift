@@ -1,14 +1,14 @@
 //
-//  watchTargetApp.swift
-//  watchTarget Watch App
+//  newTargetApp.swift
+//  newTarget Watch App
 //
-//  Created by lending on 4/13/26.
+//  Created by lending on 4/16/26.
 //
 
 import SwiftUI
 
 @main
-struct watchTarget_Watch_AppApp: App {
+struct newTarget_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

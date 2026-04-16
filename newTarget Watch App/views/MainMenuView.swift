@@ -21,23 +21,20 @@ struct MainMenuView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            Spacer()
             BalanceView(coins: $coins)
             claimBonusView
             
             Spacer()
             
-            Text("Pocket Casino")
-            
-            Spacer()
-            
             Button("PLAY") {
-                path.append(.playSelect)
+                path.append(.gameSelectSP)
             }
-            .font(.largeTitle)
-            .frame(width: 200, height: 100)
+            .font(.title)
             .background(SwiftUI.Color(.blue))
             .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
             
             Spacer()
             

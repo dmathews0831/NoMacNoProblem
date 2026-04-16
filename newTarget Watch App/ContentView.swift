@@ -153,7 +153,7 @@ struct ContentView: View {
                         BlackjackResultView(
                             path: $path,
                             coins: $coins,
-                            resultMessage: bjResultMessage,
+                            resultMessage: $bjResultMessage,
                             onPlayAgain: resetBlackjack
                         )
                         .navigationBarBackButtonHidden(true)
