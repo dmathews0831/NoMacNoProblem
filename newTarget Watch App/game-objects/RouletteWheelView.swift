@@ -13,7 +13,6 @@ struct RouletteWheelView: View {
     
     let wheel: RouletteWheel
     let numSlices: Int = 38
-    let winningIndex: Int?
 
     var body: some View {
         ZStack {

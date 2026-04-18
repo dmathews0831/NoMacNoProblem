@@ -113,7 +113,7 @@ struct WheelSlice: View {
 
                 // Number at outer edge of slice
                 Text(label)
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: 6, weight: .bold))
                     .foregroundColor(.white)
                     // Rotate so top points toward center
                     .rotationEffect(midAngle / 64)

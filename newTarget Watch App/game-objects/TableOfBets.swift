@@ -39,68 +39,68 @@ struct TableOfBets: View {
     ]
     
     let rowHeight: CGFloat = 50
-    let rowSpacing: CGFloat = 8
+    let rowSpacing: CGFloat = 1
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: -10) {
             
             // First column
-            VStack(spacing: rowSpacing) {
-                toggleBetCell("1 to 18", isSelected: bets[.low] != nil) {
+            VStack() {
+                toggleBetCell("1 to 18", isSelected: bets[.low] != nil, isOnSide: true) {
                     placeBet(.low)
                 }
                 
-                toggleBetCell("EVEN", isSelected: bets[.even] != nil) {
+                toggleBetCell("EVEN", isSelected: bets[.even] != nil, isOnSide: true) {
                     placeBet(.even)
                 }
                 
-                toggleBetCell("RED", isSelected: bets[.red] != nil) {
+                toggleBetCell("RED", isSelected: bets[.red] != nil, isOnSide: true) {
                     placeBet(.red)
                 }
                 
-                toggleBetCell("BLACK", isSelected: bets[.black] != nil) {
+                toggleBetCell("BLACK", isSelected: bets[.black] != nil, isOnSide: true) {
                     placeBet(.black)
                 }
                 
-                toggleBetCell("ODD", isSelected: bets[.odd] != nil) {
+                toggleBetCell("ODD", isSelected: bets[.odd] != nil, isOnSide: true) {
                     placeBet(.odd)
                 }
                 
-                toggleBetCell("19 to 36", isSelected: bets[.high] != nil) {
+                toggleBetCell("19 to 36", isSelected: bets[.high] != nil, isOnSide: true) {
                     placeBet(.high)
                 }
             }
             
             // Second column
-            VStack(spacing: rowSpacing) {
-                toggleBetCell("1st 12", isSelected: bets[.dozen(1)] != nil) {
+            VStack() {
+                toggleBetCell("1st 12", isSelected: bets[.dozen(1)] != nil, isOnSide: true) {
                     placeBet(.dozen(1))
                 }
-                toggleBetCell("2nd 12", isSelected: bets[.dozen(2)] != nil) {
+                toggleBetCell("2nd 12", isSelected: bets[.dozen(2)] != nil, isOnSide: true) {
                     placeBet(.dozen(2))
                 }
-                toggleBetCell("3rd 12", isSelected: bets[.dozen(3)] != nil) {
+                toggleBetCell("3rd 12", isSelected: bets[.dozen(3)] != nil, isOnSide: true) {
                     placeBet(.dozen(3))
                 }
             }
             
             // Main table
-            VStack(spacing: 8) {
+            VStack(spacing: -20) {
                 
                 // Top row
-                HStack(spacing: 8) {
-                    toggleBetCell("0", isSelected: bets[.zero] != nil) {
+                HStack(spacing: -10) {
+                    toggleBetCell("0", isSelected: bets[.zero] != nil, isOnSide: false) {
                         placeBet(.zero)
                     }
-                    toggleBetCell("00", isSelected: bets[.doubleZero] != nil) {
+                    toggleBetCell("00", isSelected: bets[.doubleZero] != nil, isOnSide: false) {
                         placeBet(.doubleZero)
                     }
                 }
                 
                 // Number grid
                 LazyVGrid(
-                    columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3),
-                    spacing: 8
+                    columns: Array(repeating: GridItem(.flexible(), spacing: -10), count: 3),
+                    spacing: -10
                 ) {
                     ForEach(1...36, id: \.self) { number in
                         numberCell(number)
@@ -108,14 +108,14 @@ struct TableOfBets: View {
                 }
                 
                 // Bottom row
-                HStack(spacing: 8) {
-                    toggleBetCell("2 to 1", isSelected: bets[.column(1)] != nil) {
+                HStack(spacing: -10) {
+                    toggleBetCell("2 to 1", isSelected: bets[.column(1)] != nil, isOnSide: false) {
                         placeBet(.column(1))
                     }
-                    toggleBetCell("2 to 1", isSelected: bets[.column(2)] != nil) {
+                    toggleBetCell("2 to 1", isSelected: bets[.column(2)] != nil, isOnSide: false) {
                         placeBet(.column(2))
                     }
-                    toggleBetCell("2 to 1", isSelected: bets[.column(3)] != nil) {
+                    toggleBetCell("2 to 1", isSelected: bets[.column(3)] != nil, isOnSide: false) {
                         placeBet(.column(3))
                     }
                 }
@@ -158,12 +158,14 @@ struct TableOfBets: View {
                 .foregroundColor(.white)
                 .cornerRadius(6)
         }
+        .frame(width:50, height:50)
     }
     
     // Toggle cells
     func toggleBetCell(
         _ text: String,
         isSelected: Bool,
+        isOnSide: Bool,
         color: SwiftUI.Color = .green,
         action: @escaping () -> Void
     ) -> some View {
@@ -174,7 +176,9 @@ struct TableOfBets: View {
                 .background(isSelected ? SwiftUI.Color.yellow : color)
                 .foregroundColor(.white)
                 .cornerRadius(6)
+                .rotationEffect(.degrees(isOnSide ? -90 : 0))
         }
+        .frame(width:50, height:100)
     }
     
     // Basic red/black coloring
@@ -183,6 +187,72 @@ struct TableOfBets: View {
     }
 }
 
+struct BetSheetView: View {
+    
+    @Binding var coins: Int
+    @Binding var bets: [BetType: Int]
+    @Binding var currentBetAmount: Int
+    @Binding var showingBetSheet: Bool
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            VStack(spacing: 16) {
+                
+                VStack {
+                    Text("\(coins)")
+                    Text("Bet Amount: \(currentBetAmount)")
+                        .font(.caption)
+                    if coins < 10 {
+                        Text("Not enough coins to place a bet")
+                            .foregroundColor(.red)
+                    }
+                    Slider(
+                        value: Binding(
+                            get: { Double(currentBetAmount) },
+                            set: { newValue in
+                                currentBetAmount = max(0, Int(newValue / 10) * 10)
+                            }
+                        ),
+                        in: 0...Double(max(coins, 10)),
+                        step: 10
+                    )
+                    .disabled(coins < 10)
+                    .frame(height: 20)
+                    
+                }
+                
+                // Table of bets
+                ScrollView {
+                    TableOfBets(coins: $coins, bets: $bets, betAmount: currentBetAmount)
+                }
+                .background(.black)
+                
+                // Button to return to the wheel
+                Button("WHEEL") {
+                    withAnimation {
+                        showingBetSheet = false
+                    }
+                }
+                .font(.caption)
+                .frame(width:100, height:20)
+                .background(SwiftUI.Color(.blue))
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                
+            }
+            .padding(.bottom, 10)
+            .frame(maxWidth: .infinity)
+            .background(SwiftUI.Color(.black))
+            .cornerRadius(20)
+            .shadow(radius: 10)
+        }
+        .ignoresSafeArea()
+    }
+}
+
+/**
 struct BetSheetView: View {
     
     @Binding var coins: Int
@@ -249,3 +319,4 @@ struct BetSheetView: View {
         .ignoresSafeArea()
     }
 }
+*/

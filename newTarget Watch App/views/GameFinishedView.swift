@@ -28,17 +28,17 @@ struct GameFinishedView: View {
             // Display the player winnings/losses
             if netWinnings > 0 {
                 Text("You won: +\(netWinnings)")
-                    .font(.title)
+                    .font(.caption)
                     .foregroundColor(.green)
             }
             else if netWinnings < 0 {
                 Text("You lost: \(netWinnings)")
-                    .font(.title)
+                    .font(.caption)
                     .foregroundColor(.red)
             }
             else {
                 Text("No change in your balance")
-                    .font(.title)
+                    .font(.caption)
                     .foregroundColor(.gray)
             }
             

@@ -44,16 +44,16 @@ struct RouletteView: View {
                     ZStack {
                         Circle()
                             .stroke(.black, lineWidth: 2)
-                            .frame(width: 300, height: 300)
+                            .frame(width: 150, height: 150)
                             .shadow(radius: 50)
                         // Wheel
-                        RouletteWheelView(rotation: $rotation, wheel: wheel, winningIndex: Int?(winningPocket!.number))
-                            .frame(width: 300, height: 300)
+                        RouletteWheelView(rotation: $rotation, wheel: wheel)
+                            .frame(width: 150, height: 150)
                         // Center of wheel
                         Circle()
                             .stroke(SwiftUI.Color.black, lineWidth: 2)
                             .fill(SwiftUI.Color.yellow)
-                            .frame(width: 175, height: 175)
+                            .frame(width: 100, height: 100)
                             .shadow(radius: 2)
                         // Result text
                         if let pocket = winningPocket {
@@ -72,13 +72,22 @@ struct RouletteView: View {
                             //isWheelSpinning = true
                         }
                     }
-                    // Button to pull up the bet table
-                    Button("BET") {
-                        withAnimation {
-                            showingBetSheet = true
+                    Spacer()
+                    HStack {
+                        // Button to pull up the bet table
+                        Button("BET") {
+                            withAnimation {
+                                showingBetSheet = true
+                            }
                         }
+                        .padding()
+                        
+                        // Leave button
+                        Button("Leave") {
+                            path.append(.mainMenu)
+                        }
+                        .foregroundColor(.red)
                     }
-                    .padding()
                 }
                 if showingBetSheet {
                     // Dim the background
@@ -95,11 +104,6 @@ struct RouletteView: View {
                     )
                     .transition(.move(edge: .bottom))
                 }
-            }
-            Spacer()
-            // Leave button
-            Button("Leave") {
-                path.append(.finish)
             }
         }
     }

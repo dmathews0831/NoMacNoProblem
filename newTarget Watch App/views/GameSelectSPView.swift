@@ -18,8 +18,7 @@ struct GameSelectSPView: View {
             BalanceView(coins: $coins)
             
             Spacer()
-            Text("Which game would you like to play?")
-                .font(.title2)
+            
             Button("Roulette") {
                 path.append(.playRoulette)
                 selectedGame = .roulette
