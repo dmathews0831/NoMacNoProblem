@@ -88,7 +88,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Image("CasinoBackground")
-                .frame(width: 100, height: 100)
+                .frame(width: 10, height: 10)
             // Main navigation stack for switching between screens
             NavigationStack(path: $path) {
                 MainMenuView(path: $path, coins: $coins)

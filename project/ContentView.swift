@@ -74,48 +74,72 @@ struct ContentView: View {
                     case .mainMenu:
                         MainMenuView(path: $path, coins: $coins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .playSelect:
                         PlaySelectView(path: $path, coins: $coins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .settings:
                         SettingsView(path: $path)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .profile:
                         ProfileView(path: $path)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .gameSelectSP:
                         GameSelectSPView(path: $path, coins: $coins, selectedGame: $selectedGame)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .CPUSelect:
                         CPUSelectView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground")) 
                     case .joinHost:
                         JoinHostView(path: $path, coins: $coins, gameID: $gameID)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .enterGameID:
                         EnterGameIDView(path: $path, coins: $coins, selectedGame: $selectedGame, gameID: $gameID)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .gameSelectMP:
                         GameSelectMPView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .waitingRoom:
                         WaitingRoomView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .playRoulette:
                         RouletteView(path: $path, coins: $coins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .playBlackjack:
                         BlackjackView(path: $path, coins: $coins)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     case .finish:
                         GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
                             .navigationBarBackButtonHidden(true)
+                            .background(Image("CasinoBackground"))
                     }
                 }
+                .background(Image("CasinoBackground"))
         }
+        
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
+/**
+ 
+ Background image from:
+ 
+ https://www.istockphoto.com/vector/poker-table-background-in-green-color-gm1441236934-480999711
+ 
+ */
