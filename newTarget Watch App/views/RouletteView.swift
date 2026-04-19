@@ -58,11 +58,13 @@ struct RouletteView: View {
                         // Result text
                         if let pocket = winningPocket {
                             Text("Result: \(pocket.displayNumber)")
-                                .font(.headline)
+                                .font(.caption)
+                                .foregroundStyle(.black)
                         }
                         else {
                             Text("Tap to Spin")
-                                .font(.headline)
+                                .font(.caption)
+                                .foregroundStyle(.black)
                         }
                         
                     }

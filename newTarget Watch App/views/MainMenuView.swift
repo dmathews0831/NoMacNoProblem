@@ -22,6 +22,10 @@ struct MainMenuView: View {
     var body: some View {
         VStack {
             Spacer()
+            
+            Text("Mobile Casino")
+                .font(.title2)
+            
             Spacer()
             BalanceView(coins: $coins)
             claimBonusView
@@ -32,9 +36,7 @@ struct MainMenuView: View {
                 path.append(.gameSelectSP)
             }
             .font(.title)
-            .background(SwiftUI.Color(.blue))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
+            .tint(.green)
             
             Spacer()
             
@@ -43,7 +45,7 @@ struct MainMenuView: View {
                     path.append(.settings)
                 } label: {
                     Image(systemName: "gearshape.fill")
-                        .font(.title)
+                        .font(.title3)
                 }
                 
                 Spacer()
@@ -52,7 +54,7 @@ struct MainMenuView: View {
                     path.append(.profile)
                 } label: {
                     Image(systemName: "person.circle.fill")
-                        .font(.title)
+                        .font(.title3)
                 }
             }
             .padding()

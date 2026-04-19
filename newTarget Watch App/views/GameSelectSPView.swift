@@ -25,6 +25,7 @@ struct GameSelectSPView: View {
             }
             .font(.title)
             .buttonStyle(.borderedProminent)
+            .tint(.red)
             
             Button("Blackjack") {
                 path.append(.playBlackjack)
@@ -32,6 +33,7 @@ struct GameSelectSPView: View {
             }
             .font(.title)
             .buttonStyle(.borderedProminent)
+            .tint(.blue)
             
             Spacer()
             

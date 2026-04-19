@@ -86,79 +86,83 @@ struct ContentView: View {
     }
     
     var body: some View {
-        // Main navigation stack for switching between screens
-        NavigationStack(path: $path) {
-            MainMenuView(path: $path, coins: $coins)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .mainMenu:
-                        MainMenuView(path: $path, coins: $coins)
+        ZStack {
+            Image("CasinoBackground")
+                .frame(width: 100, height: 100)
+            // Main navigation stack for switching between screens
+            NavigationStack(path: $path) {
+                MainMenuView(path: $path, coins: $coins)
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .mainMenu:
+                            MainMenuView(path: $path, coins: $coins)
+                                .navigationBarBackButtonHidden(true)
+                        case .playSelect:
+                            PlaySelectView(path: $path, coins: $coins)
+                                .navigationBarBackButtonHidden(true)
+                        case .settings:
+                            SettingsView(path: $path)
+                                .navigationBarBackButtonHidden(true)
+                        case .profile:
+                            ProfileView(path: $path)
+                                .navigationBarBackButtonHidden(true)
+                        case .gameSelectSP:
+                            GameSelectSPView(path: $path, coins: $coins, selectedGame: $selectedGame)
+                                .navigationBarBackButtonHidden(true)
+                        case .CPUSelect:
+                            CPUSelectView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
+                                .navigationBarBackButtonHidden(true)
+                        case .joinHost:
+                            JoinHostView(path: $path, coins: $coins, gameID: $gameID)
+                                .navigationBarBackButtonHidden(true)
+                        case .enterGameID:
+                            EnterGameIDView(path: $path, coins: $coins, selectedGame: $selectedGame, gameID: $gameID)
+                                .navigationBarBackButtonHidden(true)
+                        case .gameSelectMP:
+                            GameSelectMPView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
+                                .navigationBarBackButtonHidden(true)
+                        case .waitingRoom:
+                            WaitingRoomView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
+                                .navigationBarBackButtonHidden(true)
+                        case .playRoulette:
+                            RouletteView(path: $path, coins: $coins)
+                                .navigationBarBackButtonHidden(true)
+                        case .playBlackjack:
+                            BlackjackView(path: $path,
+                                          coins: $coins,
+                                          dealer: $bjDealer,
+                                          betAmount: $bjBetAmount,
+                                          dealerHand: $bjDealerHand,
+                                          playerHand: $bjPlayerHand,
+                                          dealerScore: $bjDealerScore,
+                                          playerScore: $bjPlayerScore)
                             .navigationBarBackButtonHidden(true)
-                    case .playSelect:
-                        PlaySelectView(path: $path, coins: $coins)
+                        case .finish:
+                            GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
+                                .navigationBarBackButtonHidden(true)
+                        case .blackjackGame:
+                            BlackjackGameView(
+                                path: $path,
+                                coins: $coins,
+                                dealer: $bjDealer,
+                                dealerHand: $bjDealerHand,
+                                playerHand: $bjPlayerHand,
+                                dealerScore: $bjDealerScore,
+                                playerScore: $bjPlayerScore,
+                                resultMessage: $bjResultMessage
+                            )
                             .navigationBarBackButtonHidden(true)
-                    case .settings:
-                        SettingsView(path: $path)
+                        case .blackjackResult:
+                            BlackjackResultView(
+                                path: $path,
+                                coins: $coins,
+                                resultMessage: $bjResultMessage,
+                                onPlayAgain: resetBlackjack
+                            )
                             .navigationBarBackButtonHidden(true)
-                    case .profile:
-                        ProfileView(path: $path)
-                            .navigationBarBackButtonHidden(true)
-                    case .gameSelectSP:
-                        GameSelectSPView(path: $path, coins: $coins, selectedGame: $selectedGame)
-                            .navigationBarBackButtonHidden(true)
-                    case .CPUSelect:
-                        CPUSelectView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
-                            .navigationBarBackButtonHidden(true)
-                    case .joinHost:
-                        JoinHostView(path: $path, coins: $coins, gameID: $gameID)
-                            .navigationBarBackButtonHidden(true)
-                    case .enterGameID:
-                        EnterGameIDView(path: $path, coins: $coins, selectedGame: $selectedGame, gameID: $gameID)
-                            .navigationBarBackButtonHidden(true)
-                    case .gameSelectMP:
-                        GameSelectMPView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
-                            .navigationBarBackButtonHidden(true)
-                    case .waitingRoom:
-                        WaitingRoomView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
-                            .navigationBarBackButtonHidden(true)
-                    case .playRoulette:
-                        RouletteView(path: $path, coins: $coins)
-                            .navigationBarBackButtonHidden(true)
-                    case .playBlackjack:
-                        BlackjackView(path: $path,
-                                      coins: $coins,
-                                      dealer: $bjDealer,
-                                      betAmount: $bjBetAmount,
-                                      dealerHand: $bjDealerHand,
-                                      playerHand: $bjPlayerHand,
-                                      dealerScore: $bjDealerScore,
-                                      playerScore: $bjPlayerScore)
-                            .navigationBarBackButtonHidden(true)
-                    case .finish:
-                        GameFinishedView(path: $path, coins: $coins, startingCoins: $startingCoins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
-                            .navigationBarBackButtonHidden(true)
-                    case .blackjackGame:
-                        BlackjackGameView(
-                            path: $path,
-                            coins: $coins,
-                            dealer: $bjDealer,
-                            dealerHand: $bjDealerHand,
-                            playerHand: $bjPlayerHand,
-                            dealerScore: $bjDealerScore,
-                            playerScore: $bjPlayerScore,
-                            resultMessage: $bjResultMessage
-                        )
-                        .navigationBarBackButtonHidden(true)
-                    case .blackjackResult:
-                        BlackjackResultView(
-                            path: $path,
-                            coins: $coins,
-                            resultMessage: $bjResultMessage,
-                            onPlayAgain: resetBlackjack
-                        )
-                        .navigationBarBackButtonHidden(true)
+                        }
                     }
-                }
+            }
         }
     }
 }
@@ -166,3 +170,11 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+/**
+ 
+ Background image from:
+ 
+ https://www.istockphoto.com/vector/poker-table-background-in-green-color-gm1441236934-480999711
+ 
+ */

@@ -26,7 +26,8 @@ struct MainMenuView: View {
             
             Spacer()
             
-            Text("Pocket Casino")
+            Text("Mobile Casino")
+                .font(Font.largeTitle.bold())
             
             Spacer()
             
