@@ -111,16 +111,33 @@ struct RouletteView: View {
     
     // Helper function to spin the roulette wheel
     func spinWheel() {
-        let result = wheel.spinWithIndex()
-        winningPocket = result.pocket
-
-        let sliceAngle = 360.0 / Double(wheel.pockets.count)
-        let winningAngle = sliceAngle * Double(result.index)
-
-        rotation += 360 * 5 + (360 - winningAngle)
-        
-        if let winningNumber = Int(result.pocket.displayNumber) {
-            payout(for: winningNumber)
+        isWheelSpinning = true
+            
+        Task {
+            // Fetch new number every spin
+            await wheel.loadData()
+                
+            let result = wheel.spinWithIndex()
+                
+            // Spin the wheel according to the winning pocket
+            DispatchQueue.main.async {
+                winningPocket = result.pocket
+                    
+                let sliceAngle = 360.0 / Double(wheel.pockets.count)
+                let targetAngle = Double(result.index) * sliceAngle
+                    
+                rotation += 360 * 5 + (360 - targetAngle)
+                
+                // Payout
+                if let winningNumber = Int(result.pocket.displayNumber) {
+                    payout(for: winningNumber)
+                }
+                    
+                // Stop spinning after animation
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    isWheelSpinning = false
+                }
+            }
         }
     }
     
