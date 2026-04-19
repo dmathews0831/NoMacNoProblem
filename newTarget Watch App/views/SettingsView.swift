@@ -18,14 +18,12 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Text("Settings")
+                .padding()
             Spacer()
             Toggle("Dark Mode", isOn: $darkModeEnabled)
-                .padding()
             Toggle("Sound", isOn: $soundEnabled)
-                .padding()
             Text("Adjust Volume")
             Slider(value: $volumeLevel, in: 0...100)
-                .padding()
                 .disabled(!soundEnabled)
                 .opacity(soundEnabled ? 1.0 : 0.5)
             Spacer()
