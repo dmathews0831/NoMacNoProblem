@@ -18,12 +18,17 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Text("Settings")
+                .font(.title)
+                .foregroundStyle(.white)
+                .padding(.top)
             Spacer()
-            Toggle("Dark Mode", isOn: $darkModeEnabled)
-                .padding()
+            //Toggle("Dark Mode", isOn: $darkModeEnabled)
+            //    .padding()
             Toggle("Sound", isOn: $soundEnabled)
+                .foregroundStyle(.white)
                 .padding()
             Text("Adjust Volume")
+                .foregroundStyle(.white)
             Slider(value: $volumeLevel, in: 0...100)
                 .padding()
                 .disabled(!soundEnabled)
@@ -32,6 +37,7 @@ struct SettingsView: View {
             Button("Back") {
                 path.removeLast()
             }
+            .foregroundStyle(.white)
         }
     }
 }

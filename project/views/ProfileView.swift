@@ -19,6 +19,7 @@ struct ProfileView: View {
         VStack(spacing: 20) {
             Text("Profile")
                 .font(.title)
+                .foregroundStyle(.white)
                 .padding()
             Spacer()
             // Check if the user is logged in
@@ -46,6 +47,7 @@ struct ProfileView: View {
             Button("Back") {
                 path.removeLast()
             }
+            .foregroundStyle(.white)
         }
     }
 }

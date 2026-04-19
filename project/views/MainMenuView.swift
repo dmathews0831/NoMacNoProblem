@@ -28,6 +28,7 @@ struct MainMenuView: View {
             
             Text("Mobile Casino")
                 .font(Font.largeTitle.bold())
+                .foregroundStyle(.white)
             
             Spacer()
             

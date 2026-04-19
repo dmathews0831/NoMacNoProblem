@@ -13,6 +13,7 @@ struct BalanceView: View {
     var body: some View {
         Text("Balance: \(coins)")
             .font(.title2)
+            .foregroundStyle(.white)
             .padding(.top)
     }
 }

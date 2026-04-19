@@ -78,6 +78,10 @@ struct RouletteView: View {
                             showingBetSheet = true
                         }
                     }
+                    .font(.title)
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                    .foregroundStyle(.white)
                     .padding()
                 }
                 if showingBetSheet {
@@ -101,6 +105,7 @@ struct RouletteView: View {
             Button("Leave") {
                 path.append(.finish)
             }
+            .foregroundStyle(.white)
         }
     }
     
