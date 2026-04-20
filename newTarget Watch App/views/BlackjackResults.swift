@@ -18,7 +18,7 @@ struct BlackjackResultView: View {
             Spacer()
 
             Text(resultMessage)
-                .font(.title2)
+                .font(.subheadline)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
 

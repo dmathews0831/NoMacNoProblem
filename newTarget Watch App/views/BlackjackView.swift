@@ -48,7 +48,15 @@ struct BlackjackView: View {
             Spacer()
             
             Text("Bet: \(Int(betAmount))")
-            // Replace with .digitalCrownRotation on watchOS
+                .focusable()
+                .digitalCrownRotation(
+                        $betAmount,
+                        from: 10,
+                        through: Double(coins),
+                        by: 10,
+                        sensitivity: .high,
+                        isContinuous: false
+                    )
             Slider(value: $betAmount, in: 10...Double(max(coins, 10)), step: 10)
             
             Button("Deal") {
