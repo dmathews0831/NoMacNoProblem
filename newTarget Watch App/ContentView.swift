@@ -10,15 +10,9 @@ import Foundation
 
 enum Route: Hashable {
     case mainMenu
-    case playSelect
     case settings
     case profile
     case gameSelectSP
-    case joinHost
-    case gameSelectMP
-    case CPUSelect
-    case enterGameID
-    case waitingRoom
     case playRoulette
     case playBlackjack
     case finish
@@ -61,6 +55,7 @@ struct ContentView: View {
     // Initial player balance before a game is played
     @State private var startingCoins: Int = 0
     
+    // State variables for blackjack
     @State private var bjDealer = BlackjackDealer(deck: Deck())
     @State private var bjBetAmount: Double = 10
     @State private var bjDealerHand: [PlayingCard] = []
@@ -97,9 +92,6 @@ struct ContentView: View {
                         case .mainMenu:
                             MainMenuView(path: $path, coins: $coins)
                                 .navigationBarBackButtonHidden(true)
-                        case .playSelect:
-                            PlaySelectView(path: $path, coins: $coins)
-                                .navigationBarBackButtonHidden(true)
                         case .settings:
                             SettingsView(path: $path)
                                 .navigationBarBackButtonHidden(true)
@@ -108,21 +100,6 @@ struct ContentView: View {
                                 .navigationBarBackButtonHidden(true)
                         case .gameSelectSP:
                             GameSelectSPView(path: $path, coins: $coins, selectedGame: $selectedGame)
-                                .navigationBarBackButtonHidden(true)
-                        case .CPUSelect:
-                            CPUSelectView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
-                                .navigationBarBackButtonHidden(true)
-                        case .joinHost:
-                            JoinHostView(path: $path, coins: $coins, gameID: $gameID)
-                                .navigationBarBackButtonHidden(true)
-                        case .enterGameID:
-                            EnterGameIDView(path: $path, coins: $coins, selectedGame: $selectedGame, gameID: $gameID)
-                                .navigationBarBackButtonHidden(true)
-                        case .gameSelectMP:
-                            GameSelectMPView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount)
-                                .navigationBarBackButtonHidden(true)
-                        case .waitingRoom:
-                            WaitingRoomView(path: $path, coins: $coins, selectedGame: $selectedGame, selectedPlayerCount: $selectedPlayerCount, selectedCPUCount: $selectedCPUCount, startingCoins: $startingCoins)
                                 .navigationBarBackButtonHidden(true)
                         case .playRoulette:
                             RouletteView(path: $path, coins: $coins)
