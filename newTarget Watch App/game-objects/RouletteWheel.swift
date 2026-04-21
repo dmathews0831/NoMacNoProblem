@@ -28,19 +28,44 @@ class RouletteWheel {
     // Or using type inference:
     private(set) var pockets: [RoulettePocket] = [];
     
+    // Winning number
+    var winningNumber: Int? = nil
+    
+    // API class used to fetch random number
+    let apiService = APIService()
+    
     init() {
         self.pockets = generatePockets();
     }
     
-    // Return a random pocket
-    func spin() -> RoulettePocket {
-        return pockets.randomElement()!
+    // Fetch a random number from Random.org's API
+    func loadData() async {
+        do {
+            winningNumber = try await apiService.fetchRandomNumber()
+            print("Fetching random number from Random.org")
+        } catch {
+            print("Error fetching from Random.org: \(error)")
+            winningNumber = pocketSequence.randomElement()
+        }
     }
-
-    // Return a random pocket with its index, good for animation
+        
+    // Spin function using API result
+    func spin() -> RoulettePocket {
+        // Default to randomElement() if API fetch failed
+        let number = winningNumber ?? pocketSequence.randomElement()!
+        return pockets.first(where: { $0.number == number })!
+    }
+        
+    // Spin with index function using API result
     func spinWithIndex() -> (pocket: RoulettePocket, index: Int) {
-        let index = pocketSequence.randomElement()!
-        return (pockets[index], index)
+        // Default to randomElement() if API fetch failed
+        let number = winningNumber ?? pocketSequence.randomElement()!
+            
+        if let index = pockets.firstIndex(where: { $0.number == number }) {
+            return (pockets[index], index)
+        }
+            
+        return (pockets[0], 0) // fallback safety
     }
     
     func generatePockets() -> [RoulettePocket] {

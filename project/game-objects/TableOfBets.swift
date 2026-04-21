@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 2/23/26.
 //
+//  This file contains the table of bets view for roulette
 
 import SwiftUI
 
@@ -22,6 +23,7 @@ enum BetType: Hashable {
     case column(Int)    // 1 for 1st col, 2 for 2nd col, 3 for 3rd col.
 }
 
+// Main table view
 struct TableOfBets: View {
     
     @Binding var coins: Int
@@ -124,6 +126,7 @@ struct TableOfBets: View {
         .padding()
     }
     
+    // Helper to get the height for each row
     func heightForRows(_ rows: Int) -> CGFloat {
         CGFloat(rows) * rowHeight + CGFloat(rows - 1) * rowSpacing
     }
@@ -143,6 +146,7 @@ struct TableOfBets: View {
         }
     }
     
+    // Bet square view generator for the number bets
     func numberCell(_ number: Int) -> some View {
         let type = BetType.number(number)
         let amount = bets[type] ?? 0
@@ -160,7 +164,7 @@ struct TableOfBets: View {
         }
     }
     
-    // Toggle cells
+    // Bet square view generator for the other non-number bets
     func toggleBetCell(
         _ text: String,
         isSelected: Bool,
@@ -183,6 +187,7 @@ struct TableOfBets: View {
     }
 }
 
+// Window view showing the table, betting slider, and appropriate buttons
 struct BetSheetView: View {
     
     @Binding var coins: Int
@@ -199,7 +204,7 @@ struct BetSheetView: View {
                 Text("Place Your Bets")
                     .font(.headline)
                     .padding()
-                
+                // Bet slider to adjust how much the player wants to bet
                 VStack {
                     Text("Bet Amount: \(currentBetAmount)")
                     if coins < 10 {
@@ -213,15 +218,15 @@ struct BetSheetView: View {
                                 currentBetAmount = max(0, Int(newValue / 10) * 10)
                             }
                         ),
-                        in: 0...Double(max(coins, 10)),
-                        step: 10
+                        in: 0...Double(max(coins, 10)),     // Min bet: 0, max bet: coins
+                        step: 10                            // Step by 10
                     )
                     .disabled(coins < 10)
                     
                 }
                 .padding()
                 
-                // Table of bets
+                // Table of bets in a scroll view
                 ScrollView {
                     TableOfBets(coins: $coins, bets: $bets, betAmount: currentBetAmount)
                 }

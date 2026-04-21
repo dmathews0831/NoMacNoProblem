@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the game ID entering view where the player can enter a game ID to play in multiplayer. Currently just for demonstration.
 
 import SwiftUI
 
@@ -29,6 +30,8 @@ struct EnterGameIDView: View {
             Text("Enter Game ID")
                 .font(.title2)
             
+            // Field to enter the game ID
+            // Only allow the player to enter 3 numeric characters
             TextField("3-digit ID", text: $gameID)
                 //.keyboardType(.numberPad)
                 //.textFieldStyle(.roundedBorder)
@@ -41,6 +44,7 @@ struct EnterGameIDView: View {
             
             Spacer()
             
+            // Join button to take the player to the waiting room
             Button("JOIN") {
                 if isValidGameID {
                     path.append(.waitingRoom)
@@ -55,9 +59,12 @@ struct EnterGameIDView: View {
             
             Spacer()
             
+            // Back button
             Button("Back") {
                 path.removeLast()
             }
+            .padding()
+            .foregroundStyle(.white)
         }
     }
 }

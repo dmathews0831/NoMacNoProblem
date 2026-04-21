@@ -7,6 +7,7 @@
 // TASK 2: View Balance - Display current coin balance
 // Custom Views - Reusable component for balance display
 // Data Binding - @Binding for reactive coin updates
+//  Description: This file contains the simple balance view struct to display the user's coin balance
 
 import SwiftUI
 

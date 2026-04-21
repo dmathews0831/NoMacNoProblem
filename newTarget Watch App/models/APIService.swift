@@ -2,9 +2,8 @@
 //  APIService.swift
 //  project
 //
-//  Created by Alexander Joseph Toskey on 4/19/26.
+//  Created by CS3714 on 4/21/26.
 //
-//  Description: This file contains the API service model for fetching a random number from Random.org.
 
 import Foundation
 

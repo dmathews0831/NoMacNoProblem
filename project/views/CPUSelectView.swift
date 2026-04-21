@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the CPU select view where the player can select how many CPUs they want to play against. Currently just for demonstration.
 
 import SwiftUI
 
@@ -23,7 +24,6 @@ struct CPUSelectView: View {
         return Array(0...(maxPlayers - humans))
     }
     
-    
     var body: some View {
         VStack {
             BalanceView(coins: $coins)
@@ -32,7 +32,8 @@ struct CPUSelectView: View {
             
             Text("Select Number of CPUs")
                 .font(.title2)
-            
+                .foregroundStyle(.white)
+            // Display the options for number of CPUs
             HStack {
                 ForEach(1...maxPlayers, id: \.self) { num in
                     Button("\(num)") {
@@ -48,6 +49,7 @@ struct CPUSelectView: View {
             
             Spacer()
             
+            // Play button to take the player to the selected game
             Button("PLAY") {
                 if (selectedGame == .roulette) {
                     path.append(.playRoulette)
@@ -63,12 +65,14 @@ struct CPUSelectView: View {
             
             Spacer()
             
+            // Back button
             Button("Back") {
                 path.removeLast()
                 selectedGame = nil
                 selectedCPUCount = nil
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }

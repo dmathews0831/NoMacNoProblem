@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the user profile sign-in which allows the user to login with their Apple Account.
 
 import SwiftUI
 import AuthenticationServices
@@ -31,7 +32,7 @@ struct ProfileView: View {
                     UserDefaults.standard.removeObject(forKey: "userID")
                 }
             }
-            // Otherwise, display sign-in with Apple ID button
+            // Otherwise, display sign-in with Apple Account button
             else {
                 SignInWithAppleButton(
                     .signIn,

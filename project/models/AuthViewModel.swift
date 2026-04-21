@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 4/15/26.
 //
+//  Description: This file contains the authentication model for the user sign-in.
 
 import SwiftUI
 import AuthenticationServices

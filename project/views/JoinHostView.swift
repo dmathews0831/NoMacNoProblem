@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the view for joining/hosting a game for multiplayer.
 
 import SwiftUI
 
@@ -13,18 +14,13 @@ struct JoinHostView: View {
     @Binding var coins: Int
     @Binding var gameID: String
     
-    var balanceView: some View {
-        Text("Balance: \(coins)")
-            .font(.title2)
-            .padding(.top)
-    }
-    
     var body: some View {
         VStack {
-            balanceView
+            BalanceView(coins: $coins)
             
             Spacer()
             
+            // Join game button
             Button("Join Game") {
                 gameID = "" // reset input
                 path.append(.enterGameID)
@@ -32,6 +28,7 @@ struct JoinHostView: View {
             .font(.title)
             .buttonStyle(.borderedProminent)
             
+            // Host game button
             Button("Host Game") {
                 path.append(.gameSelectMP)
             }
@@ -40,10 +37,12 @@ struct JoinHostView: View {
             
             Spacer()
             
+            // Back button
             Button("Back") {
                 path.removeLast()
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }

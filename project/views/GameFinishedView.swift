@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the game finished view which displays the player's winnings/losses after a game is finished.
 
 import SwiftUI
 
@@ -49,6 +50,7 @@ struct GameFinishedView: View {
                 selectedPlayerCount = nil
                 selectedCPUCount = nil
             }
+            .foregroundStyle(.white)
         }
     }
 }

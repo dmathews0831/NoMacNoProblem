@@ -4,6 +4,7 @@
 //
 //  Created by Dylan Mathews on 2/9/26.
 //
+//  Description: This is the iOS version of our mobile casino app. This ContentView contains the main navigation stack for the app, allowing the player to navigation between the different screens.
 
 import SwiftUI
 import Foundation
