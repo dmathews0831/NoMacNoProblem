@@ -17,6 +17,7 @@ struct MainMenuView: View {
             coins += 1000
         }
         .buttonStyle(.borderedProminent)
+        .tint(.yellow)
     }
     
     var body: some View {
@@ -26,9 +27,16 @@ struct MainMenuView: View {
             
             Spacer()
             
-            Text("Mobile Casino")
-                .font(Font.largeTitle.bold())
-                .foregroundStyle(.white)
+            ZStack {
+                PokerChipView(color: .red, size: 260)
+                Text("Mobile Casino")
+                    .padding(5)
+                    .font(Font.largeTitle.bold())
+                    .foregroundStyle(.black)
+                    .background(.white)
+                    .opacity(0.9)
+                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
+            }
             
             Spacer()
             
@@ -37,8 +45,8 @@ struct MainMenuView: View {
             }
             .font(.largeTitle)
             .frame(width: 200, height: 100)
-            .background(SwiftUI.Color(.blue))
-            .foregroundColor(.white)
+            .background(.yellow)
+            .foregroundStyle(.white)
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
             
             Spacer()
@@ -49,6 +57,7 @@ struct MainMenuView: View {
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .font(.title)
+                        .foregroundStyle(.white)
                 }
                 
                 Spacer()
@@ -58,6 +67,7 @@ struct MainMenuView: View {
                 } label: {
                     Image(systemName: "person.circle.fill")
                         .font(.title)
+                        .foregroundStyle(.white)
                 }
             }
             .padding()
