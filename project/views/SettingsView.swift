@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the settings view.
 
 import SwiftUI
 

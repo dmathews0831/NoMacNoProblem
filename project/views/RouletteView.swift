@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the primary view for roulette. It allows the player to place bets on the table of bets and spin the roulette wheel to get a number. If the number falls under one of the placed bets, the user gets the appropriate payout. If not, the player gets nothing.
 
 import SwiftUI
 
@@ -26,8 +27,10 @@ struct RouletteView: View {
     // State variable which will display the table of bets
     @State private var showingBetSheet = false
     
+    // State variable to control when the wheel is spinning
     @State var isWheelSpinning: Bool = false
     
+    // Numbers which should be colored red on the wheel and table of bets
     let redNumbers: Set<Int> = [
         1,3,5,7,9,
         12,14,16,18,

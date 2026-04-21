@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the waiting room view for players waiting to join a multiplayer game. Currently just for demonstration.
 
 import SwiftUI
 
@@ -23,6 +24,8 @@ struct WaitingRoomView: View {
             Spacer()
             
             Text("Waiting Room")
+            
+            // Button for the host to start the game
             Button("Start Game") {
                 if (selectedGame == .roulette) {
                     path.append(.playRoulette)
@@ -44,6 +47,7 @@ struct WaitingRoomView: View {
             
             Spacer()
             
+            // Button to leave the room
             Button("Leave Room") {
                 path.append(.mainMenu)
                 selectedGame = nil

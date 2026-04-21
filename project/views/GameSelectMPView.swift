@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+// Description: This file contains the multiplayer game select view which allows the host to select the game to play and the player settings.
 
 import SwiftUI
 
@@ -28,6 +29,7 @@ struct GameSelectMPView: View {
             
             Spacer()
             
+            // Roulette button
             Text("Select game to host")
                 .font(.title2)
                 .foregroundStyle(.white)
@@ -40,6 +42,7 @@ struct GameSelectMPView: View {
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
             
+            // Blackjack button
             Button("Blackjack") {
                 selectedGame = .blackjack
             }
@@ -88,6 +91,8 @@ struct GameSelectMPView: View {
             
             Spacer()
             
+            // Button to start the game
+            // Only clickable when all settings have been selected
             Button("Launch Game") {
                 if (selectedGame != nil &&
                     selectedPlayerCount != nil &&
@@ -106,6 +111,7 @@ struct GameSelectMPView: View {
             
             Spacer()
             
+            // Back button
             Button("Back") {
                 path.removeLast()
                 selectedGame = nil

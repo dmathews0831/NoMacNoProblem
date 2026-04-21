@@ -4,28 +4,33 @@
 //
 //  Created by Alexander Joseph Toskey on 2/23/26.
 //
+//  Description: This file contains the class and structs for the roulette wheel and roulette pockets
 
 import Foundation
 import SwiftUI
 
+// Colors for the roulette pockets
 enum RouletteColor {
     case red
     case black
     case green
 }
 
+// Generic roulette pocket struct
 struct RoulettePocket {
-    let number: Int             // 0, 1, 2... use -1 for 00
+    let number: Int             // 0, 1, 2... using -1 for 00
     let displayNumber: String   // "0", "00"...
     let color: RouletteColor
 }
 
+// Main roulette wheel class
 class RouletteWheel {
     
     // -1 represents 00 for now, want to use Int instead of String
     let pocketSequence: [Int] = [0, 28, 9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1,
                                  -1, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2];
-    // Or using type inference:
+    
+    // List of pockets
     private(set) var pockets: [RoulettePocket] = [];
     
     // Winning number
@@ -65,9 +70,10 @@ class RouletteWheel {
             return (pockets[index], index)
         }
             
-        return (pockets[0], 0) // fallback safety
+        return (pockets[0], 0)
     }
     
+    // Pocket generation function, called in init()
     func generatePockets() -> [RoulettePocket] {
             
         let redNumbers: Set<Int> = [
@@ -97,12 +103,14 @@ class RouletteWheel {
         return pockets
     }
     
+    // Function to calculate the angle for a pocket
     func angleForPocket(at index: Int) -> Double {
         let sliceAngle = 360.0 / Double(pockets.count)
         return sliceAngle * Double(index)
     }
 }
 
+// Struct for an individual wheel slice representing a roulette pocket
 struct WheelSlice: View {
     let startAngle: Angle
     let endAngle: Angle

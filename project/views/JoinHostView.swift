@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the view for joining/hosting a game for multiplayer.
 
 import SwiftUI
 
@@ -19,6 +20,7 @@ struct JoinHostView: View {
             
             Spacer()
             
+            // Join game button
             Button("Join Game") {
                 gameID = "" // reset input
                 path.append(.enterGameID)
@@ -26,6 +28,7 @@ struct JoinHostView: View {
             .font(.title)
             .buttonStyle(.borderedProminent)
             
+            // Host game button
             Button("Host Game") {
                 path.append(.gameSelectMP)
             }
@@ -34,6 +37,7 @@ struct JoinHostView: View {
             
             Spacer()
             
+            // Back button
             Button("Back") {
                 path.removeLast()
             }

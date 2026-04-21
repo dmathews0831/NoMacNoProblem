@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/22/26.
 //
+//  Description: This file contains the main menu view for the app which is the first screen the user sees. It has the main "play" button, the button to allow the user to collect their daily coin bonus, and buttons navigating to the settings and profile screens.
 
 import SwiftUI
 
@@ -12,6 +13,7 @@ struct MainMenuView: View {
     @Binding var path: [Route]
     @Binding var coins: Int
     
+    // Simple button view to collect the player's daily bonus
     var claimBonusView: some View {
         Button("CLAIM DAILY BONUS") {
             coins += 1000
@@ -27,6 +29,7 @@ struct MainMenuView: View {
             
             Spacer()
             
+            // Main title with spinning poker chip
             ZStack {
                 PokerChipView(color: .red, size: 260)
                 Text("Mobile Casino")
@@ -40,6 +43,7 @@ struct MainMenuView: View {
             
             Spacer()
             
+            // Play button to take the user to the game select screen
             Button("PLAY") {
                 path.append(.playSelect)
             }
@@ -52,6 +56,7 @@ struct MainMenuView: View {
             Spacer()
             
             HStack {
+                // Settings button
                 Button {
                     path.append(.settings)
                 } label: {
@@ -62,6 +67,7 @@ struct MainMenuView: View {
                 
                 Spacer()
                 
+                // Profile button
                 Button {
                     path.append(.profile)
                 } label: {

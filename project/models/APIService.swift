@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 4/19/26.
 //
+//  Description: This file contains the API service model for fetching a random number from Random.org.
 
 import Foundation
 

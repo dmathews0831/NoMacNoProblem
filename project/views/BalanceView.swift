@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the simple balance view struct to display the user's coin balance
 
 import SwiftUI
 
