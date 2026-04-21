@@ -49,6 +49,7 @@ struct BlackjackGameView: View {
 
             Spacer()
 
+            // FUNCTIONAL REQUIREMENT: The player should be able to choose to hit, stand, or double when in a blackjack hand
             HStack {
                 Button("Hit") { handleHit() }
                     .font(.footnote)

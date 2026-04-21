@@ -4,6 +4,7 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+//  Description: This file contains the single player game select view which allows the player to select which game they want to play
 
 import SwiftUI
 

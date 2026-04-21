@@ -25,6 +25,7 @@ struct MainMenuView: View {
             coins += 1000
         }
         .buttonStyle(.borderedProminent)
+        .tint(.yellow)
     }
     
     var body: some View {

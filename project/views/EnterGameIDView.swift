@@ -29,6 +29,7 @@ struct EnterGameIDView: View {
             
             Text("Enter Game ID")
                 .font(.title2)
+                .foregroundStyle(.white)
             
             // Field to enter the game ID
             // Only allow the player to enter 3 numeric characters
@@ -41,6 +42,7 @@ struct EnterGameIDView: View {
                     // Restrict to digits and max length of 3
                     gameID = String(gameID.filter { $0.isNumber }.prefix(3))
                 }
+                .foregroundStyle(.white)
             
             Spacer()
             

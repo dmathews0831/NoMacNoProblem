@@ -4,11 +4,13 @@
 //
 //  Created by Alexander Joseph Toskey on 3/18/26.
 //
+//  This file contains the view for the roulette wheel.
 
 import SwiftUI
 
 struct RouletteWheelView: View {
     
+    // Rotation angle of the wheel
     @Binding var rotation: Double
     
     let wheel: RouletteWheel
@@ -16,6 +18,7 @@ struct RouletteWheelView: View {
 
     var body: some View {
         ZStack {
+            // Generate the 38 pockets
             ForEach(0..<wheel.pockets.count, id: \.self) { index in
                 let sliceAngle: Double = 360.0 / Double(numSlices)
                 let start = Angle(degrees: sliceAngle * Double(index))
@@ -32,7 +35,8 @@ struct RouletteWheelView: View {
         .rotationEffect(.degrees(rotation))
         .animation(.easeOut(duration: 4), value: rotation)
     }
-
+    
+    // Helper to get the color of the pocket
     func getColor(for rouletteColor: RouletteColor) -> SwiftUI.Color {
         switch rouletteColor {
         case .red: return .red

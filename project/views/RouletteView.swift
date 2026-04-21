@@ -69,6 +69,7 @@ struct RouletteView: View {
                         }
                         
                     }
+                    // FUNCTIONAL REQUIREMENT: The player should be able to spin the roulette wheel to get a random number
                     .onTapGesture {
                         if !isWheelSpinning {
                             spinWheel()

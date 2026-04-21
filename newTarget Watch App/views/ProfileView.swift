@@ -34,6 +34,7 @@ struct ProfileView: View {
                 }
             }
             // Otherwise, display sign-in with Apple ID button
+            // FUNCTIONAL REQUIREMENT: The player should be able to be able to sign-in with their Apple Account
             else {
                 SignInWithAppleButton(
                     .signIn,

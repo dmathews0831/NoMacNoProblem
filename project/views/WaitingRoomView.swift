@@ -24,6 +24,7 @@ struct WaitingRoomView: View {
             Spacer()
             
             Text("Waiting Room")
+                .foregroundStyle(.white)
             
             // Button for the host to start the game
             Button("Start Game") {
