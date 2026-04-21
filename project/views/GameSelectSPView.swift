@@ -20,12 +20,14 @@ struct GameSelectSPView: View {
             Spacer()
             Text("Which game would you like to play?")
                 .font(.title2)
+                .foregroundStyle(.white)
             Button("Roulette") {
                 path.append(.CPUSelect)
                 selectedGame = .roulette
             }
             .font(.title)
             .buttonStyle(.borderedProminent)
+            .tint(.red)
             
             Button("Blackjack") {
                 path.append(.CPUSelect)
@@ -40,6 +42,7 @@ struct GameSelectSPView: View {
                 path.removeLast()
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }

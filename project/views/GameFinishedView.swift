@@ -49,6 +49,7 @@ struct GameFinishedView: View {
                 selectedPlayerCount = nil
                 selectedCPUCount = nil
             }
+            .foregroundStyle(.white)
         }
     }
 }

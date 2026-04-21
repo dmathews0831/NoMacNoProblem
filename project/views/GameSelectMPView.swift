@@ -30,6 +30,7 @@ struct GameSelectMPView: View {
             
             Text("Select game to host")
                 .font(.title2)
+                .foregroundStyle(.white)
             Button("Roulette") {
                 selectedGame = .roulette
             }
@@ -56,6 +57,7 @@ struct GameSelectMPView: View {
                 VStack {
                     Text("Number of Human Players")
                         .font(.headline)
+                        .foregroundStyle(.white)
                     
                     Picker("Humans", selection: $selectedPlayerCount) {
                         Text("Select").tag(Int?.none)
@@ -70,6 +72,7 @@ struct GameSelectMPView: View {
                 VStack {
                     Text("Number of CPUs")
                         .font(.headline)
+                        .foregroundStyle(.white)
                     
                     Picker("CPUs", selection: $selectedCPUCount) {
                         Text("Select").tag(Int?.none)
@@ -109,6 +112,8 @@ struct GameSelectMPView: View {
                 selectedPlayerCount = nil
                 selectedCPUCount = nil
             }
+            .padding()
+            .foregroundStyle(.white)
         }
     }
 }

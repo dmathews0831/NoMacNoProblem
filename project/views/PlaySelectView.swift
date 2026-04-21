@@ -36,6 +36,7 @@ struct PlaySelectView: View {
                 path.removeLast()
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }

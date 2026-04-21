@@ -32,6 +32,7 @@ struct CPUSelectView: View {
             
             Text("Select Number of CPUs")
                 .font(.title2)
+                .foregroundStyle(.white)
             
             HStack {
                 ForEach(1...maxPlayers, id: \.self) { num in
@@ -69,6 +70,7 @@ struct CPUSelectView: View {
                 selectedCPUCount = nil
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }

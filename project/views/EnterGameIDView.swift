@@ -58,6 +58,8 @@ struct EnterGameIDView: View {
             Button("Back") {
                 path.removeLast()
             }
+            .padding()
+            .foregroundStyle(.white)
         }
     }
 }

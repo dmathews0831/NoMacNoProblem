@@ -50,6 +50,8 @@ struct WaitingRoomView: View {
                 selectedPlayerCount = nil
                 selectedCPUCount = nil
             }
+            .padding()
+            .foregroundStyle(.white)
         }
     }
 }

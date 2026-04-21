@@ -13,15 +13,9 @@ struct JoinHostView: View {
     @Binding var coins: Int
     @Binding var gameID: String
     
-    var balanceView: some View {
-        Text("Balance: \(coins)")
-            .font(.title2)
-            .padding(.top)
-    }
-    
     var body: some View {
         VStack {
-            balanceView
+            BalanceView(coins: $coins)
             
             Spacer()
             
@@ -44,6 +38,7 @@ struct JoinHostView: View {
                 path.removeLast()
             }
             .padding()
+            .foregroundStyle(.white)
         }
     }
 }
