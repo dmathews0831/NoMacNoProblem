@@ -10,6 +10,7 @@ import Foundation
 
 class APIService {
     
+    // Function to fetch a random number
     func fetchRandomNumber() async throws -> Int {
         
         // Create the URL
@@ -32,4 +33,27 @@ class APIService {
         return number
     }
     
+    // Function to fetch a random number with a timeout constraint
+    // NON-FUNCTIONAL REQUIREMENT: Fetching a random number should take less than 1 second in online mode
+    func fetchWithTimeout(seconds: Double) async throws -> Int? {
+        await withTaskGroup(of: Int?.self) { group in
+            
+            // Task 1: API call
+            group.addTask {
+                return try? await self.fetchRandomNumber()
+            }
+            
+            // Task 2: Timeout
+            group.addTask {
+                try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+                return nil
+            }
+            
+            // Return whichever finishes first
+            let result = await group.next()!
+            group.cancelAll()
+            
+            return result
+        }
+    }
 }

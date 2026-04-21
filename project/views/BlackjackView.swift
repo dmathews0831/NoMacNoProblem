@@ -78,6 +78,7 @@ struct BlackjackView: View {
             blackjackEndMessage = "You Lose! (-\(dealer.betAmount))"
         }
         
+        // NON-FUNCTIONAL REQUIREMENT: When playing blackjack, the game should have a delay when displaying the next card
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             resetBlackjack()
         }
@@ -129,6 +130,7 @@ struct BlackjackView: View {
             
             Text("Bet: \(Int(betAmountB))")
             
+            // FUNCTIONAL REQUIREMENT: The player should be able to choose to hit, stand, or double when in a blackjack hand
             Button("Hit") {
                 playerHand.append(dealer.dealCard()!)
                 updateScores()
@@ -139,12 +141,16 @@ struct BlackjackView: View {
                 }
             }
             .disabled(!isBlackjackActive)
+            
+            // FUNCTIONAL REQUIREMENT: The player should be able to choose to hit, stand, or double when in a blackjack hand
             Button("Stand") {
                 isBlackjackActive = false
                 dealerHand[1].hide()
                 dealerTurn()
             }
             .disabled(!isBlackjackActive)
+            
+            // FUNCTIONAL REQUIREMENT: The player should be able to choose to hit, stand, or double when in a blackjack hand
             Button("Double") {
                 isBlackjackActive = false
                 dealer.takeBet(amount: Int(betAmountB))

@@ -24,6 +24,7 @@ class AuthViewModel: NSObject, ObservableObject {
     }
     
     // Handle the end status of the sign-in, display success or failure message
+    // NON-FUNCTIONAL REQUIREMENT: The user login feature should be conducted securely, preferably using Apple Sign-in
     func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
         switch result {
         case .success(let authResults):
@@ -39,6 +40,7 @@ class AuthViewModel: NSObject, ObservableObject {
                 print("User logged in with Apple. ID: \(userID)")
             }
         // Display an error message if the sign-in failed
+        // NON-FUNCTIONAL REQUIREMENT: App should default to using AppStorage if Apple Sign-in fails
         case .failure(let error):
             print("Authorization failed: \(error.localizedDescription)")
         }

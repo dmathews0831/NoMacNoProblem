@@ -29,10 +29,12 @@ struct GameSelectMPView: View {
             
             Spacer()
             
-            // Roulette button
+            // FUNCTIONAL REQUIREMENT: The host should be able to select the game type
             Text("Select game to host")
                 .font(.title2)
                 .foregroundStyle(.white)
+            
+            // Roulette button
             Button("Roulette") {
                 selectedGame = .roulette
             }
@@ -57,6 +59,7 @@ struct GameSelectMPView: View {
             VStack(spacing: 20) {
                 
                 // Human Players Picker
+                // FUNCTIONAL REQUIREMENT: The host should be able to choose the number of human/CPU players for the game
                 VStack {
                     Text("Number of Human Players")
                         .font(.headline)
@@ -93,6 +96,7 @@ struct GameSelectMPView: View {
             
             // Button to start the game
             // Only clickable when all settings have been selected
+            // FUNCTIONAL REQUIREMENT: The host should be able to start the game by clicking a “launch game” button
             Button("Launch Game") {
                 if (selectedGame != nil &&
                     selectedPlayerCount != nil &&

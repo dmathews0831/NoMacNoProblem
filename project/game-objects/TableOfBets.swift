@@ -147,6 +147,7 @@ struct TableOfBets: View {
     }
     
     // Bet square view generator for the number bets
+    // FUNCTIONAL REQUIREMENT: The player should be able to place bets on the roulette table
     func numberCell(_ number: Int) -> some View {
         let type = BetType.number(number)
         let amount = bets[type] ?? 0
@@ -165,6 +166,7 @@ struct TableOfBets: View {
     }
     
     // Bet square view generator for the other non-number bets
+    // FUNCTIONAL REQUIREMENT: The player should be able to place bets on the roulette table
     func toggleBetCell(
         _ text: String,
         isSelected: Bool,

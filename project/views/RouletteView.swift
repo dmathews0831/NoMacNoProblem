@@ -105,6 +105,7 @@ struct RouletteView: View {
             }
             Spacer()
             // Leave button
+            // FUNCTIONAL REQUIREMENT: The host should be able to end the game by clicking a “leave” button
             Button("Leave") {
                 path.append(.finish)
             }

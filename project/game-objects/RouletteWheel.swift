@@ -64,6 +64,7 @@ class RouletteWheel {
     // Spin with index function using API result
     func spinWithIndex() -> (pocket: RoulettePocket, index: Int) {
         // Default to randomElement() if API fetch failed
+        // NON-FUNCTIONAL REQUIREMENT: App should default to offline mode if random number fetching fails
         let number = winningNumber ?? pocketSequence.randomElement()!
             
         if let index = pockets.firstIndex(where: { $0.number == number }) {
