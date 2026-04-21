@@ -4,6 +4,9 @@
 //
 //  Created by lending on 4/16/26.
 //
+// SwiftUI - Uses SwiftUI framework for watchOS UI
+// Responsiveness - Runs on multiple devices (iOS & watchOS)
+// Xcode - Project managed in Xcode with .xcodeproj
 
 import SwiftUI
 

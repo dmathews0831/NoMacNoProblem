@@ -3,7 +3,8 @@
 //  project
 //
 //  Created by Alexander Joseph Toskey on 2/18/26.
-//
+//  Model class for card representation with properties and methods
+//  Functional Programming - Uses properties and computed values for card logic
 
 import Foundation
 
@@ -84,15 +85,20 @@ class PlayingCard: Identifiable {
         }
     }
     
+    // Procedural Programming - Utility function to toggle card visibility state
+    // Object-Oriented Programming - State mutation method on class
     func hide() {
         self.hidden = !self.hidden
     }
     
+    // Functional Programming - Uses conditional expression for card display logic
+    // Procedural Programming - Utility function for string representation
+    // Object-Oriented Programming - Method on class for card description
     func description() -> String {
         if self.hidden {
-            return "🂠"
+            return "🂠"  // Hidden card emoji
         }
-        return faceValue.rawValue + suit.rawValue
+        return faceValue.rawValue + suit.rawValue  // e.g., "A♥", "K♠"
     }
     
 }

@@ -4,6 +4,10 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+// TASK 6: View Game Results - Display winnings/losses
+// Custom Views - GameFinishedView component
+// Data Binding - Multiple @Binding parameters for result data
+// Responsiveness - Uses caption font for watch display
 
 import SwiftUI
 

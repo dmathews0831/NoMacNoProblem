@@ -8,6 +8,10 @@
 import SwiftUI
 import Foundation
 
+// Navigation Stacks - Implements NavigationStack with Route enum for screen switching
+// 5+ Tasks - MainMenu, PlaySelect, GameSelect, Roulette, Blackjack, Profile, Settings, Finish
+// Data Binding - Uses @State for navigation, game state, and @AppStorage for persistence
+
 enum Route: Hashable {
     case mainMenu
     case playSelect
@@ -24,10 +28,10 @@ enum Route: Hashable {
     case finish
 }
 
-// Game states
+// Functional Programming - Enum for type-safe game selection
 enum Game {
-    case roulette
-    case blackjack
+    case roulette    // TASK 1: Play Roulette game
+    case blackjack   // TASK 2: Play Blackjack game
 }
 
 // Maximum number of possible CPUs in a game
@@ -39,8 +43,11 @@ let maxHumans = 4
 // Default bet amount
 let betAmount = 10
 
+// Custom Views - Uses custom MainMenuView, PlaySelectView, GameSelectSPView, etc.
+// Data Binding - @State and @AppStorage for reactive state management
 struct ContentView: View {
     
+    // Data Binding - Navigation path for NavigationStack routing
     @State private var path: [Route] = [];
     
     // Selected game
@@ -58,7 +65,7 @@ struct ContentView: View {
     // Initial player balance before a game is played
     @State private var startingCoins: Int = 0
     
-    // Initialize stored variables
+    // Data Binding - @AppStorage for persistent data binding across app sessions
     @AppStorage("playerName") var playerName: String = ""
     @AppStorage("coins") var coins: Int = 0
     
@@ -66,7 +73,8 @@ struct ContentView: View {
     @AppStorage("darkModeEnabled") var darkModeEnabled: Bool = true;
     
     var body: some View {
-        // Main navigation stack for switching between screens
+        // Navigation Stacks - Primary navigation using NavigationStack with path binding
+        // Data Binding - Passes bindings to child views for reactive updates
         NavigationStack(path: $path) {
             MainMenuView(path: $path, coins: $coins)
                 .navigationDestination(for: Route.self) { route in

@@ -4,6 +4,10 @@
 //
 //  Created by Alexander Joseph Toskey on 3/25/26.
 //
+// TASK 5: User Profile Management - Apple Sign-In
+// Custom Views - ProfileView component with authentication UI
+// Data Binding - @StateObject for AuthViewModel observable object
+// Responsiveness - Simplified for watch display
 
 import SwiftUI
 import AuthenticationServices
@@ -12,7 +16,7 @@ struct ProfileView: View {
     
     @Binding var path: [Route]
     
-    // Authentication view model
+    // Data Binding - @StateObject manages AuthViewModel (Combine observable object)
     @StateObject private var authVM = AuthViewModel()
         
     var body: some View {

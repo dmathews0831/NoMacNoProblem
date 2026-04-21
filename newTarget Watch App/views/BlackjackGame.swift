@@ -4,6 +4,10 @@
 //
 //  Created by lending on 4/13/26.
 //
+// TASK 2: Play Blackjack Game
+// Custom Views - Complex game view with card hands, betting, and game logic
+// Data Binding - @Binding variables for game state management
+// Responsiveness - Compact watch layout for card display
 
 import SwiftUI
 

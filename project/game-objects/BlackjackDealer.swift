@@ -4,6 +4,8 @@
 //
 //  Created by Alexander Joseph Toskey on 2/23/26.
 //
+// Classes and structs for game object management
+// Procedural Programming - Utility functions for game logic (shuffle, assessHands, dealCard)
 
 struct Deck {
     let suits: [Suit] = [.clubs, .spades, .hearts, .diamonds]
@@ -19,6 +21,7 @@ struct Deck {
     }
 }
 
+// BlackjackDealer class encapsulates dealer logic and state
 class BlackjackDealer {
     
     var deck: Deck
@@ -30,27 +33,33 @@ class BlackjackDealer {
         shuffle()
     }
     
+    // Functional Programming - Uses map() and joined() for transforming and displaying cards
     func toString() -> String {
         return deck.cards.map { "\($0.description())" }.joined(separator: ", ")
     }
     
+    // Procedural Programming - Utility function for shuffling deck logic
     func shuffle() {
         deck.cards.shuffle()
     }
     
+    // Procedural Programming - Utility function for resetting game
     func newDeck() {
         deck = Deck()
         shuffle()
     }
     
+    // [REQ] Procedural Programming - Utility function to deal cards from deck
     func dealCard() -> PlayingCard? {
         return deck.cards.popLast()
     }
     
+    // Procedural Programming - Utility function for bet management
     func takeBet(amount: Int) {
         betAmount += amount
     }
     
+    // Procedural Programming - Game logic for hand evaluation
     func assessHands(playerHand: [PlayingCard], dealerHand: [PlayingCard]) -> (playerScore: Int, dealerScore: Int) {
         var playerScore = 0
         var dealerScore = 0
@@ -84,6 +93,7 @@ class BlackjackDealer {
         return (playerScore, dealerScore)
     }
     
+    // Procedural Programming - Game state logic to determine winners
     func checkGameState(playerScore: Int, dealerScore: Int, stand: Bool) -> (winner: Bool, push: Bool, finished: Bool) {
         if playerScore > 21 {
             return (false, false, true)

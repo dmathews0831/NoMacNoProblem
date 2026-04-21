@@ -4,6 +4,11 @@
 //
 //  Created by Alexander Joseph Toskey on 4/4/26.
 //
+// TASK 2: Play Blackjack Game
+// Custom Views - Complex game view with card hands, betting, and game logic
+// Data Binding - @State variables for game state: hands, scores, coins
+// Visually Interesting UI - Card display with emoji representation (e.g., "K♠" "A♥")
+// Responsiveness - Card layout adapts to device screen
 
 import SwiftUI
 
@@ -12,22 +17,13 @@ struct BlackjackView: View {
     @Binding var path: [Route]
     @Binding var coins: Int
     
-    // State variable for the blackjack dealer object
-    @State private var dealer = BlackjackDealer(deck: Deck())
-    
-    // State varibale for the blackjack bet amount
-    @State private var betAmountB: Double = 10
-    
-    // State variable for the player
-    // Placeholder constructor values, add data persistence later
-    @State private var player: Player = Player(id: 1, balance: 0)
-    
-    // State variable to track if a blackjack game is active
-    @State private var isBlackjackActive = false
-    
-    // State variables to track current hands in blackjack
-    @State private var dealerHand: [PlayingCard] = []
-    @State private var playerHand: [PlayingCard] = []
+    // [REQ] Data Binding - Multiple @State variables for game state management
+    @State private var dealer = BlackjackDealer(deck: Deck())     // Game object
+    @State private var betAmountB: Double = 10                     // Bet amount
+    @State private var player: Player = Player(id: 1, balance: 0)  // Player object from Player.swift
+    @State private var isBlackjackActive = false                   // Game active state
+    @State private var dealerHand: [PlayingCard] = []              // Cards dealt to dealer
+    @State private var playerHand: [PlayingCard] = []              // Cards dealt to player
     
     // State variables for the scores in blackjack
     @State private var dealerScore: Int = 0

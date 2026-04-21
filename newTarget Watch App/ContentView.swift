@@ -8,6 +8,8 @@
 import SwiftUI
 import Foundation
 
+// Navigation Stacks - Implements NavigationStack with Route enum for screen switching
+// Responsiveness - Simplified 8 routes optimized for watch display (vs 13 on iOS)
 enum Route: Hashable {
     case mainMenu
     case settings
@@ -18,13 +20,12 @@ enum Route: Hashable {
     case finish
     case blackjackGame
     case blackjackResult
-
 }
 
-// Game states
+// Functional Programming - Enum for type-safe game selection
 enum Game {
-    case roulette
-    case blackjack
+    case roulette    // TASK 1: Play Roulette game
+    case blackjack   // TASK 2: Play Blackjack game
 }
 
 // Maximum number of possible CPUs in a game
@@ -36,8 +37,11 @@ let maxHumans = 4
 // Default bet amount
 let betAmount = 10
 
+// Custom Views - Uses custom MainMenuView, GameSelectSPView, RouletteView, BlackjackGameView, etc.
+// Data Binding - @State and @AppStorage for reactive state management
 struct ContentView: View {
     
+    // Data Binding - Navigation path for NavigationStack routing
     @State private var path: [Route] = [];
     
     // Selected game
